@@ -78,6 +78,10 @@ class LoginFragment : Fragment() {
         binding.btnGoogleSignIn.setOnClickListener {
             signIn()
         }
+
+        binding.btnForgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

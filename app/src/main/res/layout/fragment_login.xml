@@ -12,6 +12,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/logo"
+        android:contentDescription="@string/image_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -70,6 +71,17 @@
         app:layout_constraintTop_toBottomOf="@id/tf_password"
         app:layout_constraintStart_toEndOf="@id/btn_sign_up"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_forgot_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintTop_toBottomOf="@id/btn_sign_up"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.AppCompat.Button.Borderless" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_google_sign_in"

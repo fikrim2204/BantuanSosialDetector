@@ -8,4 +8,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="password_confirmation">Password Confirmation</string>
     <string name="blank"> </string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="image_logo">Image logo</string>
 </resources>
