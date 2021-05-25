@@ -1,4 +1,4 @@
-package rpl1pnp.fikri.bantuansosialdetector
+package app.capstone.bantuansosialdetector
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

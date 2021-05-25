@@ -1,4 +1,4 @@
-package rpl1pnp.fikri.bantuansosialdetector
+package app.capstone.bantuansosialdetector
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

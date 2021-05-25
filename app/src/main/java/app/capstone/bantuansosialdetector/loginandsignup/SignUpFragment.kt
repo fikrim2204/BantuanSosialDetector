@@ -1,4 +1,4 @@
-package rpl1pnp.fikri.bantuansosialdetector.loginandsignup
+package app.capstone.bantuansosialdetector.loginandsignup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.gms.tasks.OnCompleteListener
+import app.capstone.bantuansosialdetector.R
 import com.google.firebase.auth.FirebaseAuth
-import rpl1pnp.fikri.bantuansosialdetector.R
 
 class SignUpFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
@@ -26,14 +25,16 @@ class SignUpFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword("email", "password")
-            .addOnCompleteListener(requireActivity(), OnCompleteListener { task ->
+            .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG)
+                        .show()
                     //Navigate to Home
                 } else {
-                    Toast.makeText(requireActivity(), "Registration Failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireActivity(), "Registration Failed", Toast.LENGTH_LONG)
+                        .show()
                 }
-            })
+            }
     }
 
     override fun onDestroyView() {

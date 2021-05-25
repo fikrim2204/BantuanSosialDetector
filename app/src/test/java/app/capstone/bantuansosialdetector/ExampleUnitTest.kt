@@ -1,4 +1,4 @@
-package rpl1pnp.fikri.bantuansosialdetector
+package app.capstone.bantuansosialdetector
 
 import org.junit.Test
 
