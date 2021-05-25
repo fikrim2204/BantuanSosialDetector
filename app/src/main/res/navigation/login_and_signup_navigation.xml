@@ -21,7 +21,10 @@
             app:destination="@id/updatePasswordFragment" />
         <action
             android:id="@+id/action_loginFragment_to_home_navigation"
-            app:destination="@id/home_navigation" />
+            app:destination="@id/home_navigation">
+            <argument android:name="username"
+                app:argType="string" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -32,7 +35,14 @@
         android:id="@+id/signUpFragment"
         android:name="app.capstone.bantuansosialdetector.loginandsignup.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <actionthars
+            android:id="@+id/action_signUpFragment_to_home_navigation"
+            app:destination="@id/home_navigation" >
+            <argument android:name="username"
+                app:argType="string" />
+        </actionthars>
+    </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
         android:name="app.capstone.bantuansosialdetector.loginandsignup.UpdatePasswordFragment"

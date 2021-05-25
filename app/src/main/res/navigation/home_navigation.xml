@@ -5,9 +5,17 @@
     android:id="@+id/home_navigation"
     app:startDestination="@id/homeFragment">
 
+    <argument
+        android:name="username"
+        app:argType="string" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="app.capstone.bantuansosialdetector.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="username"
+            app:argType="string" />
+    </fragment>
 </navigation>
