@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "16525290177",
+    "project_id": "bansos-312807",
+    "storage_bucket": "bansos-312807.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16525290177:android:2fc911b125db6bc5350240",
+        "android_client_info": {
+          "package_name": "app.capstone.bantuansosialdetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16525290177-0533u5apas3q92rg1ou3cc340qq2i0q8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3SPcwbm0cdDKmf4cdkwAwhbJADJOQt9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16525290177-0533u5apas3q92rg1ou3cc340qq2i0q8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
