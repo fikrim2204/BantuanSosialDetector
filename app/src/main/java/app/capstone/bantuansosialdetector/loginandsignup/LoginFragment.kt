@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import app.capstone.bantuansosialdetector.R
 import app.capstone.bantuansosialdetector.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -114,7 +115,7 @@ class LoginFragment : Fragment() {
 //    }
 
     private fun updateUI(currentUser: FirebaseUser?) {
-
+        findNavController().navigate(R.id.action_loginFragment_to_home_navigation)
     }
 
     companion object {
