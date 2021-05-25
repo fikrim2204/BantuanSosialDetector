@@ -7,7 +7,7 @@
 
     <argument
         android:name="username"
-        app:argType="string" />
+        app:argType="string"/>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -16,6 +16,6 @@
         tools:layout="@layout/fragment_home" >
         <argument
             android:name="username"
-            app:argType="string" />
+            app:argType="string"/>
     </fragment>
 </navigation>

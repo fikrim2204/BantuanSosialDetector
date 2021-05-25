@@ -119,8 +119,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
+        val nameUser = currentUser?.displayName ?: currentUser?.email!!
         val action =
-            LoginFragmentDirections.actionLoginFragmentToHomeNavigation(currentUser?.displayName.toString())
+            LoginFragmentDirections.actionLoginFragmentToHomeNavigation(nameUser)
         findNavController().navigate(action)
     }
 
