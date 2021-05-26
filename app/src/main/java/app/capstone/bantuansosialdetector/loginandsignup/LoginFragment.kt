@@ -2,6 +2,7 @@ package app.capstone.bantuansosialdetector.loginandsignup
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,23 +53,25 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            requireActivity(),
-                            "Successfully Logged In",
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                        //Navigate to Home
-                        user = auth.currentUser
-                        updateUI(user)
-                    } else {
-                        Toast.makeText(requireActivity(), "Login Failed", Toast.LENGTH_LONG)
-                            .show()
+            if (checkEmpty(email, password)) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                requireActivity(),
+                                "Successfully Logged In",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                            //Navigate to Home
+                            user = auth.currentUser
+                            updateUI(user)
+                        } else {
+                            Toast.makeText(requireActivity(), "${task.exception?.message}", Toast.LENGTH_LONG)
+                                .show()
+                        }
                     }
-                }
+            }
         }
 
         binding.btnSignUp.setOnClickListener {
@@ -111,6 +114,18 @@ class LoginFragment : Fragment() {
                 updateUI(null)
             }
         }
+    }
+
+    private fun checkEmpty(email: String, password: String): Boolean {
+        if (TextUtils.isEmpty(email)) {
+            binding.etEmail.error = "Please enter email"
+            return false
+        }
+        if (TextUtils.isEmpty(password)) {
+            binding.etPassword.error = "Please enter password"
+            return false
+        }
+        return true
     }
 
     private fun signIn() {
