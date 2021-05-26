@@ -16,7 +16,6 @@ import app.capstone.bantuansosialdetector.R
 import app.capstone.bantuansosialdetector.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -25,9 +24,7 @@ import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
     private val auth: FirebaseAuth by inject()
-//    private val googleSignInClient: GoogleSignInClient by inject()
-
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val googleSignInClient: GoogleSignInClient by inject()
 
     private var user: FirebaseUser? = null
     private var _binding: FragmentLoginBinding? = null
@@ -43,11 +40,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("16525290177-0533u5apas3q92rg1ou3cc340qq2i0q8.apps.googleusercontent.com")
-            .requestEmail().build()
-        googleSignInClient =  GoogleSignIn.getClient(requireActivity(), gso)
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
@@ -106,6 +98,11 @@ class LoginFragment : Fragment() {
         auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
                 //Navigate to home
+                Toast.makeText(
+                    requireActivity(),
+                    "Successfully Logged In",
+                    Toast.LENGTH_LONG
+                ).show()
                 user = auth.currentUser
                 updateUI(user)
             } else {

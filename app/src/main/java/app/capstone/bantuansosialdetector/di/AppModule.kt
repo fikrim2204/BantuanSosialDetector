@@ -3,6 +3,7 @@ package app.capstone.bantuansosialdetector.di
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val loginModule = module {
@@ -10,7 +11,7 @@ val loginModule = module {
        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("16525290177-0533u5apas3q92rg1ou3cc340qq2i0q8.apps.googleusercontent.com")
             .requestEmail().build()
-        GoogleSignIn.getClient(get(), gso)
+        GoogleSignIn.getClient(androidContext(), gso)
     }
     single {
         FirebaseAuth.getInstance()

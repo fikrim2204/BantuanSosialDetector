@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
         appBarConfig = AppBarConfiguration.Builder(navController.graph).build()
         binding.toolbar.setupWithNavController(navController, appBarConfig)
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
