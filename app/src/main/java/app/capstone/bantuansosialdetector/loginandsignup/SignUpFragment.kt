@@ -1,5 +1,6 @@
 package app.capstone.bantuansosialdetector.loginandsignup
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -9,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import app.capstone.bantuansosialdetector.MainActivity
 import app.capstone.bantuansosialdetector.databinding.FragmentSignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -65,8 +66,10 @@ class SignUpFragment : Fragment() {
     }
 
     private fun updateUi(user: String) {
-        val action = LoginFragmentDirections.actionLoginFragmentToHomeNavigation(user)
-        findNavController().navigate(action)
+        val intent = Intent(requireActivity(), MainActivity::class.java)
+        intent.putExtra(MainActivity.USERNAME, user)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun checkEmpty(email: String, password: String, passConf: String): Boolean {

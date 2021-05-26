@@ -12,4 +12,6 @@
     <string name="image_logo">Image logo</string>
     <string name="submit">Submit</string>
     <string name="input_your_email">Input your email</string>
+    <string name="home">Home</string>
+    <string name="delivery">Delivery</string>
 </resources>

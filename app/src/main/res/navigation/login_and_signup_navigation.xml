@@ -16,17 +16,6 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_updatePasswordFragment"
-            app:destination="@id/updatePasswordFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_home_navigation"
-            app:destination="@id/home_navigation"
-            app:popEnterAnim="@anim/nav_default_enter_anim"
-            app:popUpToInclusive="false">
-            <argument android:name="username"
-                app:argType="string" />
-        </action>
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -45,10 +34,4 @@
                 app:argType="string" />
         </actionthars>
     </fragment>
-    <fragment
-        android:id="@+id/updatePasswordFragment"
-        android:name="app.capstone.bantuansosialdetector.loginandsignup.UpdatePasswordFragment"
-        android:label="Update Password"
-        tools:layout="@layout/fragment_update_password" />
-    <include app:graph="@navigation/home_navigation" />
 </navigation>
