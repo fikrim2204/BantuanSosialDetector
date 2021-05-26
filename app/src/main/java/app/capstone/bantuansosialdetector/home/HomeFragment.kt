@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import app.capstone.bantuansosialdetector.HomeNavigationArgs
+import app.capstone.bantuansosialdetector.MainActivity
 import app.capstone.bantuansosialdetector.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -25,6 +26,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         binding.tvUsername.text = args.username
     }
 
