@@ -12,6 +12,18 @@
         tools:layout="@layout/fragment_home" >
         <argument
             android:name="username"
-            app:argType="string"/>
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="userId"/>
     </fragment>
+    <fragment
+        android:id="@+id/deliveryFragment"
+        android:name="app.capstone.bantuansosialdetector.delivery.DeliveryFragment"
+        android:label="Delivery"
+        tools:layout="@layout/fragment_delivery" />
+    <fragment
+        android:id="@+id/submitFragment"
+        android:name="app.capstone.bantuansosialdetector.submit.SubmitFragment"
+        android:label="Submit"
+        tools:layout="@layout/fragment_submit" />
 </navigation>

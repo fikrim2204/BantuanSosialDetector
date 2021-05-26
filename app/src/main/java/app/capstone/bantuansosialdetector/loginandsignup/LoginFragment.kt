@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import app.capstone.bantuansosialdetector.MainActivity
-import app.capstone.bantuansosialdetector.MainActivity.Companion.USERNAME
 import app.capstone.bantuansosialdetector.R
 import app.capstone.bantuansosialdetector.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -56,7 +55,7 @@ class LoginFragment : Fragment() {
                                 .show()
                             //Navigate to Home
                             user = auth.currentUser
-                            updateUI(user)
+                            updateUI()
                         } else {
                             Toast.makeText(requireActivity(), "${task.exception?.message}", Toast.LENGTH_LONG)
                                 .show()
@@ -104,10 +103,10 @@ class LoginFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 user = auth.currentUser
-                updateUI(user)
+                updateUI()
             } else {
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
-                updateUI(null)
+                updateUI()
             }
         }
     }
@@ -129,10 +128,8 @@ class LoginFragment : Fragment() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    private fun updateUI(currentUser: FirebaseUser?) {
-        val nameUser = currentUser?.displayName ?: currentUser?.email!!
+    private fun updateUI() {
         val intent = Intent(requireActivity(), MainActivity::class.java)
-        intent.putExtra(USERNAME, nameUser)
         startActivity(intent)
         requireActivity().finish()
     }

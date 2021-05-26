@@ -51,7 +51,7 @@ class SignUpFragment : Fragment() {
                                     Toast.LENGTH_LONG
                                 ).show()
                                 val user = auth.currentUser?.displayName.toString()
-                                updateUi(user)
+                                updateUi()
                             } else {
                                 Toast.makeText(
                                     requireActivity(),
@@ -65,9 +65,8 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun updateUi(user: String) {
+    private fun updateUi() {
         val intent = Intent(requireActivity(), MainActivity::class.java)
-        intent.putExtra(MainActivity.USERNAME, user)
         startActivity(intent)
         requireActivity().finish()
     }

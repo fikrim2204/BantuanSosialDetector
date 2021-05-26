@@ -3,29 +3,25 @@ package app.capstone.bantuansosialdetector
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
 
 class SplashScreenActivity : AppCompatActivity() {
+    private val auth: FirebaseAuth by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-//        if (auth.currentUser != null) {
-//            val user = auth.currentUser
-//            userLogged(user)
-//        } else {
-//            userLogin()
-//        }
-
-        userLogin()
-
+        if (auth.currentUser != null) {
+            userLogged()
+        } else {
+            userLogin()
+        }
     }
 
-    private fun userLogged(currentUser: FirebaseUser?) {
-        val nameUser = currentUser?.displayName ?: currentUser?.email!!
+    private fun userLogged() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(MainActivity.USERNAME, nameUser)
         startActivity(intent)
         finish()
     }
