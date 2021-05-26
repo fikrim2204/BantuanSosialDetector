@@ -28,4 +28,9 @@ class HomeFragment : Fragment() {
 
         binding.tvUsername.text = args.username
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
