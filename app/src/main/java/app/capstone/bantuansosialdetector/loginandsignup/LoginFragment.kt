@@ -14,16 +14,15 @@ import app.capstone.bantuansosialdetector.R
 import app.capstone.bantuansosialdetector.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
-    private lateinit var gso: GoogleSignInOptions
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val auth: FirebaseAuth by inject()
+    private val googleSignInClient: GoogleSignInClient by inject()
 
     private var user: FirebaseUser? = null
     private var _binding: FragmentLoginBinding? = null
@@ -39,11 +38,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        auth = FirebaseAuth.getInstance()
 
         if (auth.currentUser != null) {
             user = auth.currentUser
