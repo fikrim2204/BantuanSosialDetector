@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment_home)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.homeFragment,
+                R.id.profileFragment,
                 R.id.submitFragment,
                 R.id.deliveryFragment,
                 R.id.updatePasswordFragment

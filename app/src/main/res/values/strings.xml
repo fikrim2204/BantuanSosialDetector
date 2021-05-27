@@ -29,4 +29,5 @@
     <string name="change_username">Change username</string>
     <string name="profile_updated">User profile updated</string>
     <string name="change_profile">Change profile</string>
+    <string name="profile">Profile</string>
 </resources>
