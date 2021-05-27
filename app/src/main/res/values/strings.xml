@@ -22,4 +22,11 @@
     <string name="number_of_dependents">Number of dependents</string>
     <string name="id_bansos">Id Bansos</string>
     <string name="result_tracking_your_package">Result tracking your package:</string>
+    <string name="change_password">Change Password</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="set_up_password">Set up password</string>
+    <string name="username">Username</string>
+    <string name="change_username">Change username</string>
+    <string name="profile_updated">User profile updated</string>
+    <string name="change_profile">Change profile</string>
 </resources>

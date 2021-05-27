@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="app.capstone.bantuansosialdetector.loginandsignup.LoginFragment"
+        android:name="app.capstone.bantuansosialdetector.user.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="app.capstone.bantuansosialdetector.loginandsignup.ForgotPasswordFragment"
+        android:name="app.capstone.bantuansosialdetector.user.ForgotPasswordFragment"
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="app.capstone.bantuansosialdetector.loginandsignup.SignUpFragment"
+        android:name="app.capstone.bantuansosialdetector.user.SignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up" >
         <actionthars

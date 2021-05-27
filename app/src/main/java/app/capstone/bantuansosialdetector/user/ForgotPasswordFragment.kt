@@ -1,4 +1,4 @@
-package app.capstone.bantuansosialdetector.loginandsignup
+package app.capstone.bantuansosialdetector.user
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -7,14 +7,18 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="app.capstone.bantuansosialdetector.home.HomeFragment"
+        android:name="app.capstone.bantuansosialdetector.home.ProfileFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_profile" >
         <argument
             android:name="username"
             app:argType="string"
             app:nullable="true"
             android:defaultValue="userId"/>
+        <action
+            android:id="@+id/action_homeFragment_to_updatePasswordFragment"
+            app:destination="@id/updatePasswordFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/deliveryFragment"
@@ -26,4 +30,9 @@
         android:name="app.capstone.bantuansosialdetector.submit.SubmitFragment"
         android:label="Submit"
         tools:layout="@layout/fragment_submit" />
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="app.capstone.bantuansosialdetector.user.UpdateProfileFragment"
+        android:label="Update Profile"
+        tools:layout="@layout/fragment_update_profile" />
 </navigation>

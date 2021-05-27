@@ -1,9 +1,8 @@
-package app.capstone.bantuansosialdetector.loginandsignup
+package app.capstone.bantuansosialdetector.user
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +37,6 @@ class SignUpFragment : Fragment() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             val passwordConfirmation = binding.etPasswordConfirmation.text.toString()
-            Log.d("TAG", "$email, $password, $passwordConfirmation")
 
             if (checkEmpty(email, password, passwordConfirmation)) {
                 if (checkInput(email, password, passwordConfirmation)) {
