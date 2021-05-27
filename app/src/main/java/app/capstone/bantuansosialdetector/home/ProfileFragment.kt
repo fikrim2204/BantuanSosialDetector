@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import app.capstone.bantuansosialdetector.LoginActivity
 import app.capstone.bantuansosialdetector.R
-import app.capstone.bantuansosialdetector.databinding.FragmentHomeBinding
+import app.capstone.bantuansosialdetector.databinding.FragmentProfileBinding
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -17,14 +17,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class ProfileFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -44,12 +44,6 @@ class ProfileFragment : Fragment() {
             }
             tvUsername.text = user?.displayName ?: user?.uid
             tvEmail.text = user?.email
-
-            if (user?.providerData?.size == 2) {
-                if (user.providerData[1]?.providerId == "google.com") {
-                    btnChangeProfile.text = getString(R.string.set_up_password)
-                }
-            }
 
             btnChangeProfile.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_updatePasswordFragment)
