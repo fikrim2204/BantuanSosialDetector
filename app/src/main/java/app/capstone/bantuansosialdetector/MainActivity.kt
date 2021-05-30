@@ -24,9 +24,10 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.profileFragment,
-                R.id.submitFragment,
+                R.id.resultFragment,
                 R.id.deliveryFragment,
-                R.id.updatePasswordFragment
+                R.id.updatePasswordFragment,
+                R.id.submitFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

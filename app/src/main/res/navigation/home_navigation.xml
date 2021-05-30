@@ -35,4 +35,13 @@
         android:name="app.capstone.bantuansosialdetector.user.UpdateProfileFragment"
         android:label="Update Profile"
         tools:layout="@layout/fragment_update_profile" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="app.capstone.bantuansosialdetector.submit.ResultFragment"
+        android:label="Submit"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_submitFragment"
+            app:destination="@id/submitFragment" />
+    </fragment>
 </navigation>

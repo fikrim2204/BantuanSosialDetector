@@ -110,13 +110,30 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/address"
+        app:layout_constraintTop_toBottomOf="@id/dependents"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_address"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit"
         style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
-        app:layout_constraintTop_toBottomOf="@id/dependents"
+        app:layout_constraintTop_toBottomOf="@id/address"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
