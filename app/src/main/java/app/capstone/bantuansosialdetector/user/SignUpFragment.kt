@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment
 import app.capstone.bantuansosialdetector.MainActivity
 import app.capstone.bantuansosialdetector.databinding.FragmentSignUpBinding
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
 
 class SignUpFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
+    private val auth: FirebaseAuth by inject()
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -29,9 +30,6 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        auth = FirebaseAuth.getInstance()
-
 
         binding.btnSignUp.setOnClickListener {
             val email = binding.etEmail.text.toString()
