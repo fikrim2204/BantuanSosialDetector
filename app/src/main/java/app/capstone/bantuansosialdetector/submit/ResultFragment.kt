@@ -2,6 +2,7 @@ package app.capstone.bantuansosialdetector.submit
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ class ResultFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentResultBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -38,5 +40,14 @@ class ResultFragment : Fragment() {
                 fabAddSubmit.visibility = View.GONE
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.profileFragment -> {
+                findNavController().navigate(R.id.action_resultFragment_to_profileFragment)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
