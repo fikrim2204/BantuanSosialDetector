@@ -3,6 +3,7 @@ package app.capstone.bantuansosialdetector.core.di
 import app.capstone.bantuansosialdetector.core.data.source.BanSosRepository
 import app.capstone.bantuansosialdetector.core.data.source.remote.RemoteDataSource
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService
+import app.capstone.bantuansosialdetector.core.domain.model.Recipient
 import app.capstone.bantuansosialdetector.core.domain.repository.IBanSosRepository
 import app.capstone.bantuansosialdetector.core.domain.usecase.BanSosInteractor
 import app.capstone.bantuansosialdetector.core.domain.usecase.BanSosUseCase
@@ -31,19 +32,17 @@ val networkModule = module {
             .writeTimeout(15, TimeUnit.SECONDS).build()
     }
     single {
-        val retrofit = Retrofit.Builder().baseUrl("http://35.223.163.112/").addConverterFactory(
+        val retrofit = Retrofit.Builder().baseUrl("http://35.202.170.106").addConverterFactory(
             GsonConverterFactory.create()
         ).client(get()).build()
         retrofit.create(ApiService::class.java)
-    }
-    single {
-        val retrofit2 = Retrofit.Builder().baseUrl("http://34.101.148.92:8501/").addConverterFactory(
-            GsonConverterFactory.create()
-        ).client(get()).build()
-        retrofit2.create(ApiService::class.java)
     }
 }
 
 val preferenceModule = module {
     single { Prefs(get()) }
+}
+
+val modelModule = module {
+    single { Recipient() }
 }

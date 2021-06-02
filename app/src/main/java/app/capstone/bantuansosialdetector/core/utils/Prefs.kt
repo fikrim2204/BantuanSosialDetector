@@ -7,7 +7,7 @@ class Prefs(context: Context) {
     private val preferences: SharedPreferences =
         context.getSharedPreferences(USER_PREF, Context.MODE_PRIVATE)
 
-    var idUserPref: String?
+    var nikUserPref: String?
     get() = preferences.getString(ID_USER, null)
     set(value) = preferences.edit().putString(ID_USER, value).apply()
 

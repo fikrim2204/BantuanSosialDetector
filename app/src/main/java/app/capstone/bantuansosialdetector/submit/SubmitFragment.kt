@@ -50,29 +50,47 @@ class SubmitFragment : Fragment() {
 
         with(binding) {
             atvJob.setAdapter(adapter)
+            var job: Int? = null
+            atvJob.setOnItemClickListener { _, _, i, _ ->
+                job = i
+                Log.d("Position job", i.toString())
+            }
             btnSubmit.setOnClickListener {
+                val noNik = etNoNik.text.toString().toLong()
                 val name = etName.text.toString()
-                val age = etAge.text.toString().toInt()
-                val income = etIncome.text.toString().toInt()
-                val job = atvJob.text.toString()
-                val dependents = etDependents.text.toString().toInt()
+                val noHp = etNoTel.text.toString().toLong()
+                val age = Integer.parseInt(etAge.text.toString())
+                val income = etIncome.text.toString().toDouble()/1000000
+                Log.d("Income", income.toString())
+                val dependents = Integer.parseInt(etDependents.text.toString())
                 val address = etAddress.text.toString()
-                val recipient = Recipient(null, name, address, income, job, dependents, age,false)
-                viewModel.insertRecipient(recipient).observe(viewLifecycleOwner, { recipientResult ->
-                    when (recipientResult) {
-                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is Resource.Success -> {
-                            val action = SubmitFragmentDirections.actionSubmitFragmentToResultFragment(recipientResult.data?.id)
-                            findNavController().navigate(action)
-                            Toast.makeText(requireActivity(), "Form sent", Toast.LENGTH_SHORT).show()
+                val recipient =
+                    Recipient(null, noNik, name, noHp, address, income, job, dependents, age, 0)
+                viewModel.insertRecipient(recipient)
+                    .observe(viewLifecycleOwner, { recipientResult ->
+                        when (recipientResult) {
+                            is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                            is Resource.Success -> {
+                                val action =
+                                    SubmitFragmentDirections.actionSubmitFragmentToResultFragment(
+//                                        recipientResult.data?.get(0)?.noNik.toString()
+                                    )
+//                                Log.d("SubmitFragment", "${recipientResult.data?.get(0)?.noNik}")
+                                findNavController().navigate(action)
+                                Toast.makeText(requireActivity(), "Form sent", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                            is Resource.Error -> {
+                                Log.d("TAG", recipientResult.message.toString())
+                                findNavController().navigateUp()
+                                Toast.makeText(
+                                    requireActivity(),
+                                    recipientResult.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                        is Resource.Error -> {
-                            Log.d("TAG", recipientResult.message.toString())
-                            findNavController().navigateUp()
-                            Toast.makeText(requireActivity(), recipientResult.message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                })
+                    })
             }
         }
     }

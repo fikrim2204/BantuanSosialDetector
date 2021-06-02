@@ -39,4 +39,5 @@
     <string name="status_delivery">Status Delivery</string>
     <string name="add_submission">Add submission</string>
     <string name="address">Address</string>
+    <string name="no_nik">No NIK</string>
 </resources>

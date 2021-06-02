@@ -24,29 +24,46 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/no_tel"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="@string/no_telephone"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/name"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/no_nik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/no_nik"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/et_no_tel"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:inputType="number"-->
-<!--            android:layout_height="wrap_content"/>-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_no_nik"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/no_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/no_telephone"
+        app:layout_constraintTop_toBottomOf="@id/no_nik"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_no_tel"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/no_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/age"
-        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/no_tel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
