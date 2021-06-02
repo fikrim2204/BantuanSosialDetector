@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="app.capstone.bansosadmin.ui.fragments.auth.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="app.capstone.bansosadmin.ui.fragments.auth.SignUpFragment"
+        android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="app.capstone.bansosadmin.ui.fragments.auth.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment" />
+</navigation>

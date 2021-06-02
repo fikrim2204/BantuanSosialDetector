@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">BansosDetectorAdmin</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="img_logo">Logo</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="password_confirmation">Password Confirmation</string>
+    <string name="submit">Submit</string>
+    <string name="input_your_email">Input your email</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="masukkan_id_penerima">Masukkan ID Penerima</string>
+    <string name="cari">Cari</string>
+    <string name="manage">Management Tracking</string>
+</resources>

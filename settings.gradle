@@ -1,2 +1,3 @@
 rootProject.name = "BantuanSosialDetector"
 include ':app'
+include ':bansosdetectoradmin'

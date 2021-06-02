@@ -1,27 +1,20 @@
-package app.capstone.bantuansosialdetector.user
+package app.capstone.bansosadmin.ui.fragments.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import app.capstone.bantuansosialdetector.databinding.FragmentForgotPasswordBinding
+import app.capstone.bansosadmin.databinding.FragmentForgotPasswordBinding
+import app.capstone.bansosadmin.ui.fragments.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
-import org.koin.android.ext.android.inject
 
-class ForgotPasswordFragment : Fragment() {
-    private val auth: FirebaseAuth by inject()
-    private var _binding: FragmentForgotPasswordBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentForgotPasswordBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
+class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
+    private lateinit var auth: FirebaseAuth
+    override fun getBindings(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentForgotPasswordBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,10 +37,5 @@ class ForgotPasswordFragment : Fragment() {
                     }
                 }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
