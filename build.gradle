@@ -3,6 +3,10 @@ buildscript {
     ext.kotlin_version = "1.5.0"
     ext.koin_version = "2.2.3"
     ext.nav_version = "2.3.5"
+    ext.kotlin_coroutines_version = "1.3.9"
+    ext.logging_interceptor_version = '4.9.0'
+    ext.lifecycle_version = "2.3.1"
+
     repositories {
         google()
         mavenCentral()

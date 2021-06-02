@@ -106,7 +106,6 @@ class LoginFragment : Fragment() {
                 updateUI()
             } else {
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
-                updateUI()
             }
         }
     }

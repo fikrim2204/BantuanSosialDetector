@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_submitFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_submitFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
@@ -30,6 +33,11 @@
         <action
             android:id="@+id/action_resultFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <argument
+            android:name="idRecipient"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
 
     <fragment
