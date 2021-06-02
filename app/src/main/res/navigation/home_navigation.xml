@@ -3,7 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_navigation"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/resultFragment">
+
+    <fragment
+        android:id="@+id/submitFragment"
+        android:name="app.capstone.bantuansosialdetector.submit.SubmitFragment"
+        android:label="Submit"
+        tools:layout="@layout/fragment_submit" >
+        <action
+            android:id="@+id/action_submitFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_submitFragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/resultFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="app.capstone.bantuansosialdetector.user.UpdateProfileFragment"
+        android:label="Update Profile"
+        tools:layout="@layout/fragment_update_profile" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="app.capstone.bantuansosialdetector.submit.ResultFragment"
+        android:label="Submit"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_submitFragment"
+            app:destination="@id/submitFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument
+            android:name="nikRecipient"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
@@ -20,19 +57,4 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
-    <fragment
-        android:id="@+id/deliveryFragment"
-        android:name="app.capstone.bantuansosialdetector.delivery.DeliveryFragment"
-        android:label="Delivery"
-        tools:layout="@layout/fragment_delivery" />
-    <fragment
-        android:id="@+id/submitFragment"
-        android:name="app.capstone.bantuansosialdetector.submit.SubmitFragment"
-        android:label="Submit"
-        tools:layout="@layout/fragment_submit" />
-    <fragment
-        android:id="@+id/updatePasswordFragment"
-        android:name="app.capstone.bantuansosialdetector.user.UpdateProfileFragment"
-        android:label="Update Profile"
-        tools:layout="@layout/fragment_update_profile" />
 </navigation>
