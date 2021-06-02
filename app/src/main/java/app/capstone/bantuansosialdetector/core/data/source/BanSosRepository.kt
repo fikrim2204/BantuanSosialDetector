@@ -1,11 +1,10 @@
 package app.capstone.bantuansosialdetector.core.data.source
 
+import android.util.Log
 import app.capstone.bantuansosialdetector.core.data.source.remote.RemoteDataSource
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientRemote
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.*
+import app.capstone.bantuansosialdetector.core.domain.model.Insert
 import app.capstone.bantuansosialdetector.core.domain.model.Predict
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
 import app.capstone.bantuansosialdetector.core.domain.model.ResultPredict
@@ -16,14 +15,15 @@ import kotlinx.coroutines.flow.Flow
 class BanSosRepository(private val remoteDataSource: RemoteDataSource) : IBanSosRepository {
 
     override fun insertRecipient(recipient: Recipient) =
-        object : NetworkBoundResource<List<Recipient>, RecipientResponse>() {
-            override suspend fun createCall(): Flow<ApiResponse<RecipientResponse>> {
+        object : NetworkBoundResource<Insert, InsertResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<InsertResponse>> {
                 val recipientRemote = DataMapper.mapDomainToResponse(recipient)
-                return remoteDataSource.insertRecipient(recipientRemote)
+                return remoteDataSource.insertRecipient(recipient)
             }
 
-            override suspend fun fetchFromNetwork(data: RecipientResponse): Flow<List<Recipient>> {
-                return DataMapper.mapResponsesToDomainWithFlow(data.data)
+            override suspend fun fetchFromNetwork(data: InsertResponse): Flow<Insert> {
+                Log.i("TAGG", "repo: ${data.data}")
+                return DataMapper.mapResponsesInsertToDomain(data)
             }
         }.asFlow()
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 class BanSosInteractor(private val banSosRepository: IBanSosRepository) :
     BanSosUseCase {
-    override fun insertRecipient(recipient: Recipient): Flow<Resource<List<Recipient>>> = banSosRepository.insertRecipient(recipient)
+    override fun insertRecipient(recipient: Recipient) = banSosRepository.insertRecipient(recipient)
 
     override fun getRecipientByNik(nik: String): Flow<Resource<List<Recipient>>> = banSosRepository.getRecipientByNik(nik)
 

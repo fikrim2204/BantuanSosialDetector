@@ -67,7 +67,7 @@ class SubmitFragment : Fragment() {
                 val recipient =
                     Recipient(null, noNik, name, noHp, address, income, job, dependents, age, 0)
                 viewModel.insertRecipient(recipient)
-                    .observe(viewLifecycleOwner, { recipientResult ->
+                    .observe(viewLifecycleOwner) { recipientResult ->
                         when (recipientResult) {
                             is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                             is Resource.Success -> {
@@ -90,7 +90,7 @@ class SubmitFragment : Fragment() {
                                 ).show()
                             }
                         }
-                    })
+                    }
             }
         }
     }

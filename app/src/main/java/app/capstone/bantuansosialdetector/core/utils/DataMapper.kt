@@ -1,7 +1,9 @@
 package app.capstone.bantuansosialdetector.core.utils
 
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.Instance
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientRemote
+import app.capstone.bantuansosialdetector.core.domain.model.Insert
 import app.capstone.bantuansosialdetector.core.domain.model.Predict
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
 import app.capstone.bantuansosialdetector.core.domain.model.ResultPredict
@@ -55,9 +57,26 @@ object DataMapper {
         return flowOf(list)
     }
 
+    fun mapResponsesInsertToDomain(input: InsertResponse): Flow<Insert> {
+        return flowOf(
+            Insert(
+                input.data.alamat,
+                input.data.gaji,
+                input.data.id,
+                input.data.nama,
+                input.data.nik,
+                input.data.no_hp,
+                input.data.pekerjaan,
+                input.data.status,
+                input.data.tanggungan,
+                input.data.umur
+            )
+        )
+    }
+
     fun mapPredictDomainToResponse(predict: Predict): List<Instance> {
         val instanceList = ArrayList<Instance>()
-         val instance =Instance(
+        val instance = Instance(
             gaji = predict.gaji,
             pekerjaan = predict.pekerjaan,
             tanggungan = predict.tanggungan,

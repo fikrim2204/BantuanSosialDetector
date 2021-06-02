@@ -1,5 +1,6 @@
 package app.capstone.bantuansosialdetector.core.data.source.remote.network
 
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
@@ -23,7 +24,7 @@ interface ApiService {
         @Field("tanggungan") dependents: Int?,
         @Field("umur") age: Int?,
         @Field("status") status: Int?
-    ): RecipientResponse
+    ): InsertResponse
 
     @POST(":8501/v1/models/bsd:predictResponse")
     suspend fun postPredict(@Body predictResponse: PredictResponse): ResultPredictResponse
