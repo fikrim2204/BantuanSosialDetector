@@ -11,9 +11,16 @@ class BanSosInteractor(private val banSosRepository: IBanSosRepository) :
     BanSosUseCase {
     override fun insertRecipient(recipient: Recipient) = banSosRepository.insertRecipient(recipient)
 
-    override fun getRecipientByNik(nik: String): Flow<Resource<List<Recipient>>> = banSosRepository.getRecipientByNik(nik)
+    override fun getRecipientByNik(nik: String?): Flow<Resource<List<Recipient>>> =
+        banSosRepository.getRecipientByNik(nik)
 
-    override fun updateRecipient(id: String?, status: Int?) = banSosRepository.updateRecipient(id, status)
+    override fun updateRecipient(id: String?, status: Int?) =
+        banSosRepository.updateRecipient(id, status)
 
-    override fun postPredict(predict: Predict): Flow<Resource<ResultPredict>> = banSosRepository.postPredict(predict)
+    override fun getTracking(nik: String?) = banSosRepository.getTracking(nik)
+
+    override fun getDetailTracking(id: String) = banSosRepository.getDetailTracking(id)
+
+    override fun postPredict(predict: Predict?): Flow<Resource<ResultPredict>> =
+        banSosRepository.postPredict(predict)
 }

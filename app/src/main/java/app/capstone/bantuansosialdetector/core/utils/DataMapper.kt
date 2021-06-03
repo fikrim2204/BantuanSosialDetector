@@ -1,12 +1,7 @@
 package app.capstone.bantuansosialdetector.core.utils
 
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.Instance
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientRemote
-import app.capstone.bantuansosialdetector.core.domain.model.Insert
-import app.capstone.bantuansosialdetector.core.domain.model.Predict
-import app.capstone.bantuansosialdetector.core.domain.model.Recipient
-import app.capstone.bantuansosialdetector.core.domain.model.ResultPredict
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.*
+import app.capstone.bantuansosialdetector.core.domain.model.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -74,14 +69,16 @@ object DataMapper {
         )
     }
 
-    fun mapPredictDomainToResponse(predict: Predict): List<Instance> {
-        val instanceList = ArrayList<Instance>()
-        val instance = Instance(
-            gaji = predict.gaji,
-            pekerjaan = predict.pekerjaan,
-            tanggungan = predict.tanggungan,
-            umur = predict.umur
-        )
+    fun mapPredictDomainToResponse(predict: Predict?): List<Instance?> {
+        val instanceList = ArrayList<Instance?>()
+        val instance = predict?.let {
+            Instance(
+                gaji = it.gaji,
+                pekerjaan = it.pekerjaan,
+                tanggungan = it.tanggungan,
+                umur = it.umur
+            )
+        }
         instanceList.add(instance)
         return instanceList
     }
@@ -90,5 +87,30 @@ object DataMapper {
         return flowOf(
             ResultPredict(predictions = predictions)
         )
+    }
+
+    fun mapResponseTrackingToDomain(data: List<TrackingRemote>?): Flow<List<Tracking>> {
+        val list = ArrayList<Tracking>()
+        data?.map {
+            val tracking = Tracking(
+                id = it.id,
+                nik_penerima = it.nik_penerima,
+                alamat = it.alamat,
+                status = it.status
+            )
+            list.add(tracking)
+        }
+        return flowOf(list)
+    }
+
+    fun mapResponseDetailTrackingToDomain(data: List<DetailTrackingRemote>?): Flow<List<DetailTracking>> {
+
+        val list = ArrayList<DetailTracking>()
+        data?.map {
+            val detailTracking =
+                DetailTracking(id_track = it.id_track, lokasi = it.lokasi, waktu = it.waktu)
+            list.add(detailTracking)
+        }
+        return flowOf(list)
     }
 }

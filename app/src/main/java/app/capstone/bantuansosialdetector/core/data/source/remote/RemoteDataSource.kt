@@ -4,10 +4,7 @@ import android.util.Log
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService2
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.*
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -43,17 +40,17 @@ class RemoteDataSource(private val apiService: ApiService, private val apiServic
         }.flowOn(IO)
     }
 
-    fun getRecipientByNik(nik: String): Flow<ApiResponse<RecipientResponse>> {
+    fun getRecipientByNik(nik: String?): Flow<ApiResponse<RecipientResponse>> {
         return flow {
             try {
                 val response = apiService.getRecipientById(nik)
-                if (response.success) {
+                if (response.data != null) {
                     emit(ApiResponse.Success(response))
                 } else {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
+                emit(ApiResponse.Error(e.message.toString()))
             }
         }.flowOn(IO)
     }
@@ -68,9 +65,39 @@ class RemoteDataSource(private val apiService: ApiService, private val apiServic
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
+                emit(ApiResponse.Error(e.message.toString()))
             }
         }.flowOn(IO)
+    }
+
+    fun getTracking(nik: String?): Flow<ApiResponse<TrackingResponse>> {
+        return flow {
+            try {
+                val response = apiService.getTrackingByNik(nik)
+                if (response.success) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.message.toString()))
+            }
+        }.flowOn(IO)
+    }
+
+    fun getDetailTracking(id: String?): Flow<ApiResponse<DetailTrackingResponse>> {
+        return flow {
+            try {
+                val response = apiService.getTrackingDetailTracking(id)
+                if (response.success) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.message.toString()))
+            }
+        }. flowOn(IO)
     }
 
     fun postPredict(predictResponse: PredictResponse): Flow<ApiResponse<ResultPredictResponse>> {
@@ -85,7 +112,7 @@ class RemoteDataSource(private val apiService: ApiService, private val apiServic
                 }
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
-                Log.d("RemoteDataSource:", e.toString())
+                Log.d("RemoteDataSource:", e.message.toString())
             }
         }.flowOn(IO)
     }

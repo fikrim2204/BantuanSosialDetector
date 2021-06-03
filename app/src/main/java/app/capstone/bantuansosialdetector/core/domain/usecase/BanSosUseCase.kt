@@ -1,15 +1,14 @@
 package app.capstone.bantuansosialdetector.core.domain.usecase
 
 import app.capstone.bantuansosialdetector.core.data.source.Resource
-import app.capstone.bantuansosialdetector.core.domain.model.Insert
-import app.capstone.bantuansosialdetector.core.domain.model.Predict
-import app.capstone.bantuansosialdetector.core.domain.model.Recipient
-import app.capstone.bantuansosialdetector.core.domain.model.ResultPredict
+import app.capstone.bantuansosialdetector.core.domain.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface BanSosUseCase {
     fun insertRecipient(recipient: Recipient): Flow<Resource<Insert>>
-    fun getRecipientByNik(nik: String): Flow<Resource<List<Recipient>>>
+    fun getRecipientByNik(nik: String?): Flow<Resource<List<Recipient>>>
     fun updateRecipient(id: String?, status: Int?): Flow<Resource<Insert>>
-    fun postPredict(predict: Predict): Flow<Resource<ResultPredict>>
+    fun getTracking(nik: String?): Flow<Resource<List<Tracking>>>
+    fun getDetailTracking(id: String): Flow<Resource<List<DetailTracking>>>
+    fun postPredict(predict: Predict?): Flow<Resource<ResultPredict>>
 }

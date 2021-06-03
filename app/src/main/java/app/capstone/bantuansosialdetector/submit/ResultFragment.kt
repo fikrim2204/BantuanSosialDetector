@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.capstone.bantuansosialdetector.R
 import app.capstone.bantuansosialdetector.core.data.source.Resource
 import app.capstone.bantuansosialdetector.core.domain.model.Predict
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
+import app.capstone.bantuansosialdetector.core.ui.TrackingAdapter
 import app.capstone.bantuansosialdetector.core.utils.Prefs
 import app.capstone.bantuansosialdetector.databinding.FragmentResultBinding
 import org.koin.android.ext.android.inject
@@ -25,6 +27,7 @@ class ResultFragment : Fragment() {
 
     private val viewModel: ResultViewModel by viewModel()
     private val recipient: Recipient by inject()
+    private val trackingAdapter: TrackingAdapter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,182 +41,184 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        trackingAdapter.onItemClick = { selectedItem ->
+            val action =
+                ResultFragmentDirections.actionResultFragmentToTrackingFragment(selectedItem.id.toString())
+            findNavController().navigate(action)
+        }
+
         val userNik = prefs.nikUserPref
         if (userNik != null) {
-            viewModel.getRecipientByNik(userNik).observe(viewLifecycleOwner, { responseRecipient ->
-                when (responseRecipient) {
-                    is Resource.Loading -> {
-                        with(binding) {
-                            progressBar.visibility = View.VISIBLE
-                            fabAddSubmit.visibility = View.GONE
-                        }
+            viewModel.inputNikGetRecipient(userNik)
+            getRecipient()
+        } else {
+            emptyData()
+        }
+
+        with(binding.rvTracking) {
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = trackingAdapter
+        }
+    }
+
+    private fun emptyData() {
+        with(binding) {
+            lyEmpty.root.visibility = View.VISIBLE
+            lyEmpty.btnAlreadySubmit.setOnClickListener {
+                activity?.supportFragmentManager?.let { supportFragment ->
+                    DialogAlreadySubmitFragment().show(
+                        supportFragment,
+                        DialogAlreadySubmitFragment.TAG
+                    )
+                }
+            }
+            fabAddSubmit.visibility = View.VISIBLE
+            fabAddSubmit.setOnClickListener {
+                findNavController().navigate(R.id.action_resultFragment_to_submitFragment)
+            }
+        }
+    }
+
+    private fun getRecipient() {
+        viewModel.getRecipientByNik().observe(viewLifecycleOwner, { responseRecipient ->
+            when (responseRecipient) {
+                is Resource.Loading -> {
+                    with(binding) {
+                        progressBar.visibility = View.VISIBLE
+                        fabAddSubmit.visibility = View.GONE
                     }
+                }
+                is Resource.Success -> {
+                    if(responseRecipient.data?.isNotEmpty() == true) {
+                        recipient.id = responseRecipient.data[0].id
+                        recipient.gaji = responseRecipient.data[0].gaji
+                        recipient.tanggungan = responseRecipient.data[0].tanggungan
+                        recipient.pekerjaan = responseRecipient.data[0].pekerjaan
+                        recipient.umur = responseRecipient.data[0].umur
+                        recipient.status = responseRecipient.data[0].status
+
+                        val listGaji = mutableListOf<Double?>()
+                        listGaji.add(recipient.gaji)
+                        val listPekerjaan = mutableListOf<Int?>()
+                        listPekerjaan.add(recipient.pekerjaan)
+                        val listTanggungan = mutableListOf<Int?>()
+                        listTanggungan.add(recipient.tanggungan)
+                        val listUmur = mutableListOf<Int?>()
+                        listUmur.add(recipient.umur)
+
+                        val predict = Predict(listGaji, listPekerjaan, listTanggungan, listUmur)
+
+                        viewModel.inputPostPredict(predict)
+                        inputPostPredict()
+                    } else {
+                        binding.progressBar.visibility = View.GONE
+                        prefs.nikUserPref = null
+                        Toast.makeText(requireActivity(), "Nik not registered or ", Toast.LENGTH_SHORT).show()
+                        emptyData()
+                    }
+                }
+                is Resource.Error -> {
+                    Log.d("ResultFragment", responseRecipient.message.toString())
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireActivity(), responseRecipient.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        })
+    }
+
+    private fun inputPostPredict() {
+        viewModel.postPredict()
+            .observe(viewLifecycleOwner, { resultPredict ->
+                when (resultPredict) {
+                    is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                     is Resource.Success -> {
-                        with(binding) {
-                            progressBar.visibility = View.GONE
-                            recipient.id = responseRecipient.data?.get(0)?.id
-                            recipient.gaji = responseRecipient.data?.get(0)?.gaji
-                            recipient.tanggungan = responseRecipient.data?.get(0)?.tanggungan
-                            recipient.pekerjaan = responseRecipient.data?.get(0)?.pekerjaan
-                            recipient.umur = responseRecipient.data?.get(0)?.umur
-                            recipient.status = responseRecipient.data?.get(0)?.status
-
-                            val listGaji = mutableListOf<Double?>()
-                            listGaji.add(recipient.gaji)
-                            val listPekerjaan = mutableListOf<Int?>()
-                            listPekerjaan.add(recipient.pekerjaan)
-                            val listTanggungan = mutableListOf<Int?>()
-                            listTanggungan.add(recipient.tanggungan)
-                            val listUmur = mutableListOf<Int?>()
-                            listUmur.add(recipient.umur)
-
-                            val predict =
-                                Predict(listGaji, listPekerjaan, listTanggungan, listUmur)
-                            viewModel.postPredict(predict)
-                                .observe(viewLifecycleOwner, { resultPredict ->
-                                    when (resultPredict) {
-                                        is Resource.Loading -> binding.progressBar.visibility =
-                                            View.VISIBLE
-                                        is Resource.Success -> {
-                                            binding.progressBar.visibility = View.GONE
-                                            val result =
-                                                resultPredict.data?.predictions?.get(0)?.get(0)
-                                            if (result != null) {
-                                                if (result >= 0.5)
-                                                    viewModel.updateRecipientById(
-                                                        recipient.id,
-                                                        1
-                                                    ).observe(viewLifecycleOwner, { resultUpdate ->
-                                                        when (resultUpdate) {
-                                                            is Resource.Loading -> binding.progressBar.visibility =
-                                                                View.VISIBLE
-                                                            is Resource.Success -> {
-                                                                if (resultUpdate.data?.status == 1) {
-                                                                    binding.progressBar.visibility =
-                                                                        View.GONE
-                                                                    tvResult.text =
-                                                                        getString(R.string.congratulation)
-                                                                    tvResultDetail.text =
-                                                                        getString(R.string.accepted_message)
-                                                                    tvStatusDelivery.text =
-                                                                        getString(R.string.status_delivery)
-                                                                } else {
-                                                                    binding.progressBar.visibility =
-                                                                        View.GONE
-                                                                    tvResult.text =
-                                                                        getString(R.string.sorry)
-                                                                    tvResultDetail.text =
-                                                                        getString(R.string.declined_message)
-                                                                    tvStatusDelivery.visibility =
-                                                                        View.GONE
-                                                                }
-                                                            }
-                                                            is Resource.Error -> {
-                                                                binding.progressBar.visibility =
-                                                                    View.GONE
-                                                                Toast.makeText(
-                                                                    requireActivity(),
-                                                                    resultPredict.message,
-                                                                    Toast.LENGTH_SHORT
-                                                                )
-                                                                    .show()
-                                                            }
-                                                        }
-                                                    })
-                                            }
-                                        }
-                                        is Resource.Error -> {
-                                            Log.d(
-                                                "ResultFragment",
-                                                resultPredict.message.toString()
-                                            )
-                                            binding.progressBar.visibility = View.GONE
-                                            Toast.makeText(
-                                                requireActivity(),
-                                                resultPredict.message,
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
-                                        }
-                                    }
-                                })
+                        val result = resultPredict.data?.predictions?.get(0)?.get(0)
+                        if (result != null) {
+                            if (result >= 0.5) {
+                                viewModel.updateRecipient(recipient.id, 1)
+                                updateRecipient()
+                            }
                         }
                     }
                     is Resource.Error -> {
-                        Log.d("ResultFragment", responseRecipient.message.toString())
+                        Log.d("ResultFragment", resultPredict.message.toString())
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            requireActivity(),
-                            responseRecipient.message,
-                            Toast.LENGTH_SHORT
-                        )
+                        Toast.makeText(requireActivity(), resultPredict.message, Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
             })
-        } else if (recipient.gaji != null) {
-            val listGaji = mutableListOf<Double?>()
-            listGaji.add(recipient.gaji)
-            val listPekerjaan = mutableListOf<Int?>()
-            listPekerjaan.add(recipient.pekerjaan)
-            val listTanggungan = mutableListOf<Int?>()
-            listTanggungan.add(recipient.tanggungan)
-            val listUmur = mutableListOf<Int?>()
-            listUmur.add(recipient.umur)
+    }
 
-            val predict =
-                Predict(listGaji, listPekerjaan, listTanggungan, listUmur)
-            viewModel.postPredict(predict).observe(viewLifecycleOwner, { resultPredict ->
-                val result = resultPredict.data
-                binding.tvResult.text = result.toString()
-            })
-        } else {
-            with(binding) {
-                lyEmpty.root.visibility = View.VISIBLE
-                fabAddSubmit.visibility = View.VISIBLE
-                fabAddSubmit.setOnClickListener {
-                    findNavController().navigate(R.id.action_resultFragment_to_submitFragment)
+    private fun updateRecipient() {
+        viewModel.updateRecipientById().observe(viewLifecycleOwner, { resultUpdate ->
+            when (resultUpdate) {
+                is Resource.Loading -> binding.progressBar.visibility =
+                    View.VISIBLE
+                is Resource.Success -> {
+                    if (resultUpdate.data?.status == 1) {
+                        with(binding) {
+                            progressBar.visibility = View.GONE
+                            tvResult.text = getString(R.string.congratulation)
+                            tvResultDetail.text = getString(R.string.accepted_message)
+                            tvStatusDelivery.text = getString(R.string.status_delivery)
+
+                            viewModel.inputGetTracking(resultUpdate.data.nik)
+                            getTracking()
+                        }
+                    } else {
+                        with(binding) {
+                            tvResult.text = getString(R.string.sorry)
+                            tvResultDetail.text = getString(R.string.declined_message)
+                            tvStatusDelivery.visibility = View.GONE
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireActivity(), resultUpdate.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-        }
+        })
+    }
 
-//        {
-//            if (args.nikRecipient != null) {
-//                val nik = args.nikRecipient
-//                prefs.nikUserPref = nik
-//                if (nik != null) {
-//                    viewModel.getRecipientByNik(nik).observe(viewLifecycleOwner, { responseRecipient ->
-//                        when (responseRecipient) {
-//                            is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-//                            is Resource.Success -> {
-//                                with(binding) {
-//                                    fabAddSubmit.visibility = View.GONE
-////                                    tvResult.text = responseRecipient.data?.get(0)?.noNik.toString()
-////                                    recipient.gaji = responseRecipient.data?.gaji
-////                                    recipient.pekerjaan = responseRecipient.data?.pekerjaan
-////                                    recipient.tanggungan = responseRecipient.data?.tanggungan
-////                                    recipient.umur = responseRecipient.data?.umur
-//                                }
-//                            }
-//                            is Resource.Error -> {
-//                                Log.d("ResultFragment", responseRecipient.message.toString())
-//                                binding.progressBar.visibility = View.GONE
-//                                Toast.makeText(
-//                                    requireActivity(),
-//                                    responseRecipient.message,
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//                            }
-//                        }
-//                    })
-//
-////                    val predict = Predict(recipient.gaji, recipient.pekerjaan, recipient.tanggungan, recipient.umur)
-////                    viewModel.postPredict(predict)
-//                }
-//            } else {
-//
-//            }
-//        }
+    private fun getTracking() {
+        viewModel.getTracking().observe(
+            viewLifecycleOwner,
+            { resultTracking ->
+                when (resultTracking) {
+                    is Resource.Loading -> binding.progressBar.visibility =
+                        View.VISIBLE
+                    is Resource.Success -> {
+                        with(binding) {
+                            progressBar.visibility = View.GONE
+                            rvTracking.visibility = View.VISIBLE
+                            if (resultTracking.data?.isNotEmpty() == true) {
+                                binding.tvMessageDelivery.visibility = View.GONE
+                                trackingAdapter.setList(resultTracking.data)
+                            } else {
+                                binding.tvMessageDelivery.visibility = View.VISIBLE
+                                binding.tvMessageDelivery.text = getText(R.string.delivery_waiting)
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        with(binding) {
+                            progressBar.visibility = View.GONE
+                            rvTracking.visibility = View.GONE
+                            Toast.makeText(
+                                requireActivity(),
+                                "RvTracking: ${resultTracking.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -223,5 +228,10 @@ class ResultFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

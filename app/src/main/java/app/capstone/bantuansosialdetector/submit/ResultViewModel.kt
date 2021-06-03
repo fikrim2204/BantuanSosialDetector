@@ -6,10 +6,35 @@ import app.capstone.bantuansosialdetector.core.domain.model.Predict
 import app.capstone.bantuansosialdetector.core.domain.usecase.BanSosUseCase
 
 class ResultViewModel(private val banSosUseCase: BanSosUseCase) : ViewModel() {
-    fun postPredict(predict: Predict) = banSosUseCase.postPredict(predict).asLiveData()
+    private var predict: Predict? = null
+    private var nik: String? = null
+    private var nikTracking: String? = null
+    private var id: String? = null
+    private var status: Int? = null
 
-    fun getRecipientByNik(nik: String) = banSosUseCase.getRecipientByNik(nik).asLiveData()
+    fun inputPostPredict(predict: Predict?) {
+        this.predict = predict
+    }
 
-    fun updateRecipientById(id: String?, status: Int?) =
+    fun inputNikGetRecipient(nik: String?) {
+        this.nik = nik
+    }
+
+    fun updateRecipient(id: String?, status: Int?) {
+        this.id = id
+        this.status = status
+    }
+
+    fun inputGetTracking(nik: String?) {
+        this.nikTracking = nik
+    }
+
+    fun postPredict() = banSosUseCase.postPredict(predict).asLiveData()
+
+    fun getRecipientByNik() = banSosUseCase.getRecipientByNik(nik).asLiveData()
+
+    fun updateRecipientById() =
         banSosUseCase.updateRecipient(id, status).asLiveData()
+
+    fun getTracking() = banSosUseCase.getTracking(nik).asLiveData()
 }

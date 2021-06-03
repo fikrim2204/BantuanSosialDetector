@@ -1,4 +1,4 @@
-package app.capstone.bantuansosialdetector.home
+package app.capstone.bantuansosialdetector.profile
 
 import android.content.Intent
 import android.os.Bundle

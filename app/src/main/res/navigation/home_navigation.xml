@@ -13,11 +13,6 @@
         <action
             android:id="@+id/action_submitFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_submitFragment_to_resultFragment"
-            app:destination="@id/resultFragment"
-            app:popUpTo="@id/resultFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
@@ -40,11 +35,14 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_resultFragment_to_trackingFragment"
+            app:destination="@id/trackingFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="app.capstone.bantuansosialdetector.home.ProfileFragment"
+        android:name="app.capstone.bantuansosialdetector.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -56,5 +54,16 @@
             android:defaultValue="userId"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackingFragment"
+        android:name="app.capstone.bantuansosialdetector.tracking.TrackingFragment"
+        android:label="Detail Tracking"
+        tools:layout="@layout/fragment_tracking" >
+        <argument
+            android:name="idTracking"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

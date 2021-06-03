@@ -1,7 +1,11 @@
 package app.capstone.bantuansosialdetector.di
 
+import app.capstone.bantuansosialdetector.core.ui.DetailTrackingAdapter
+import app.capstone.bantuansosialdetector.core.ui.TrackingAdapter
+import app.capstone.bantuansosialdetector.core.utils.Prefs
 import app.capstone.bantuansosialdetector.submit.ResultViewModel
 import app.capstone.bantuansosialdetector.submit.SubmitViewModel
+import app.capstone.bantuansosialdetector.tracking.TrackingViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -24,4 +28,14 @@ val loginModule = module {
 val viewModelModule = module {
     viewModel { SubmitViewModel(get()) }
     viewModel { ResultViewModel(get()) }
+    viewModel { TrackingViewModel(get()) }
+}
+
+val preferenceModule = module {
+    single { Prefs(get()) }
+}
+
+val adapterModule = module {
+    single { TrackingAdapter() }
+    single { DetailTrackingAdapter() }
 }

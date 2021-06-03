@@ -8,7 +8,6 @@ import app.capstone.bantuansosialdetector.core.domain.model.Recipient
 import app.capstone.bantuansosialdetector.core.domain.repository.IBanSosRepository
 import app.capstone.bantuansosialdetector.core.domain.usecase.BanSosInteractor
 import app.capstone.bantuansosialdetector.core.domain.usecase.BanSosUseCase
-import app.capstone.bantuansosialdetector.core.utils.Prefs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -45,10 +44,6 @@ val networkModule = module {
         ).client(get()).build()
         retrofit.create(ApiService2::class.java)
     }
-}
-
-val preferenceModule = module {
-    single { Prefs(get()) }
 }
 
 val modelModule = module {

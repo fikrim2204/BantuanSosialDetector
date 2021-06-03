@@ -40,4 +40,11 @@
     <string name="add_submission">Add submission</string>
     <string name="address">Address</string>
     <string name="no_nik">No NIK</string>
+    <string name="already_submit">Already submit?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="delivery_waiting">Delivery data will appear hear soon.</string>
+    <string name="destination">Destination:</string>
+    <string name="status">Status:</string>
+    <string name="latest_location">Latest location:</string>
 </resources>

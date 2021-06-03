@@ -2,14 +2,8 @@ package app.capstone.bantuansosialdetector.core.data.source
 
 import app.capstone.bantuansosialdetector.core.data.source.remote.RemoteDataSource
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
-import app.capstone.bantuansosialdetector.core.domain.model.Insert
-import app.capstone.bantuansosialdetector.core.domain.model.Predict
-import app.capstone.bantuansosialdetector.core.domain.model.Recipient
-import app.capstone.bantuansosialdetector.core.domain.model.ResultPredict
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.*
+import app.capstone.bantuansosialdetector.core.domain.model.*
 import app.capstone.bantuansosialdetector.core.domain.repository.IBanSosRepository
 import app.capstone.bantuansosialdetector.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +22,7 @@ class BanSosRepository(private val remoteDataSource: RemoteDataSource) : IBanSos
         }.asFlow()
 
 
-    override fun getRecipientByNik(nik: String): Flow<Resource<List<Recipient>>> =
+    override fun getRecipientByNik(nik: String?): Flow<Resource<List<Recipient>>> =
         object : NetworkBoundResource<List<Recipient>, RecipientResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<RecipientResponse>> {
                 return remoteDataSource.getRecipientByNik(nik)
@@ -50,7 +44,29 @@ class BanSosRepository(private val remoteDataSource: RemoteDataSource) : IBanSos
             }
         }.asFlow()
 
-    override fun postPredict(predict: Predict): Flow<Resource<ResultPredict>> =
+    override fun getTracking(nik: String?): Flow<Resource<List<Tracking>>> =
+        object : NetworkBoundResource<List<Tracking>, TrackingResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<TrackingResponse>> {
+                return remoteDataSource.getTracking(nik)
+            }
+
+            override suspend fun fetchFromNetwork(data: TrackingResponse): Flow<List<Tracking>> {
+                return DataMapper.mapResponseTrackingToDomain(data.data)
+            }
+        }.asFlow()
+
+    override fun getDetailTracking(id: String?): Flow<Resource<List<DetailTracking>>> =
+        object : NetworkBoundResource<List<DetailTracking>, DetailTrackingResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<DetailTrackingResponse>> {
+                return remoteDataSource.getDetailTracking(id)
+            }
+
+            override suspend fun fetchFromNetwork(data: DetailTrackingResponse): Flow<List<DetailTracking>> {
+                return DataMapper.mapResponseDetailTrackingToDomain(data.data)
+            }
+        }.asFlow()
+
+    override fun postPredict(predict: Predict?): Flow<Resource<ResultPredict>> =
         object : NetworkBoundResource<ResultPredict, ResultPredictResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<ResultPredictResponse>> {
                 val instance = DataMapper.mapPredictDomainToResponse(predict)
