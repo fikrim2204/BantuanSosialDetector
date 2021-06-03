@@ -13,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import app.capstone.bantuansosialdetector.R
 import app.capstone.bantuansosialdetector.core.data.source.Resource
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
+import app.capstone.bantuansosialdetector.core.utils.Prefs
 import app.capstone.bantuansosialdetector.databinding.FragmentSubmitBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SubmitFragment : Fragment() {
@@ -21,6 +23,7 @@ class SubmitFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SubmitViewModel by viewModel()
+    private val prefs: Prefs by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,11 +74,13 @@ class SubmitFragment : Fragment() {
                         when (recipientResult) {
                             is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                             is Resource.Success -> {
-                                val action =
-                                    SubmitFragmentDirections.actionSubmitFragmentToResultFragment(
-                                        recipientResult.data?.nik.toString()
-                                    )
-                                findNavController().navigate(action)
+//                                val action =
+//                                    SubmitFragmentDirections.actionSubmitFragmentToResultFragment(
+//                                        recipientResult.data?.nik.toString()
+//                                    )
+//                                findNavController().navigate(action)
+                                prefs.nikUserPref = recipientResult.data?.nik
+                                findNavController().navigateUp()
                                 Toast.makeText(requireActivity(), "Form sent", Toast.LENGTH_SHORT)
                                     .show()
                             }

@@ -15,7 +15,7 @@ data class InsertItems(
     val nik: String,
     val no_hp: String,
     val pekerjaan: String,
-    val status: String,
+    val status: Int?,
     val tanggungan: String,
     val umur: String,
     val updated_at: String

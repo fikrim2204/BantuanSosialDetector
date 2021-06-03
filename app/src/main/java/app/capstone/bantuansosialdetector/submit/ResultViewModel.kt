@@ -9,4 +9,7 @@ class ResultViewModel(private val banSosUseCase: BanSosUseCase) : ViewModel() {
     fun postPredict(predict: Predict) = banSosUseCase.postPredict(predict).asLiveData()
 
     fun getRecipientByNik(nik: String) = banSosUseCase.getRecipientByNik(nik).asLiveData()
+
+    fun updateRecipientById(id: String?, status: Int?) =
+        banSosUseCase.updateRecipient(id, status).asLiveData()
 }

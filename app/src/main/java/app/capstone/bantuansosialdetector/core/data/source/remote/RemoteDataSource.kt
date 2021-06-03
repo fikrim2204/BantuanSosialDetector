@@ -3,18 +3,18 @@ package app.capstone.bantuansosialdetector.core.data.source.remote
 import android.util.Log
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService
+import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService2
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class RemoteDataSource(private val apiService: ApiService) {
+class RemoteDataSource(private val apiService: ApiService, private val apiService2: ApiService2) {
 
     fun insertRecipient(recipient: Recipient): Flow<ApiResponse<InsertResponse>> {
         return flow {
@@ -55,13 +55,28 @@ class RemoteDataSource(private val apiService: ApiService) {
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(IO)
+    }
+
+    fun putRecipientById(id: String?, status: Int?): Flow<ApiResponse<InsertResponse>> {
+        return flow {
+            try {
+                val response = apiService.putRecipientById(id, status)
+                if (response.success) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(IO)
     }
 
     fun postPredict(predictResponse: PredictResponse): Flow<ApiResponse<ResultPredictResponse>> {
         return flow {
             try {
-                val response = apiService.postPredict(predictResponse)
+                val response = apiService2.postPredict(predictResponse)
 
                 if (response != null) {
                     emit(ApiResponse.Success(response))
@@ -72,6 +87,6 @@ class RemoteDataSource(private val apiService: ApiService) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.d("RemoteDataSource:", e.toString())
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(IO)
     }
 }

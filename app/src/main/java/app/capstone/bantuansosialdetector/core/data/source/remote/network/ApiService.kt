@@ -1,9 +1,7 @@
 package app.capstone.bantuansosialdetector.core.data.source.remote.network
 
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
 import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
 import retrofit2.http.*
 
 interface ApiService {
@@ -26,6 +24,10 @@ interface ApiService {
         @Field("status") status: Int?
     ): InsertResponse
 
-    @POST(":8501/v1/models/bsd:predictResponse")
-    suspend fun postPredict(@Body predictResponse: PredictResponse): ResultPredictResponse
+    @FormUrlEncoded
+    @PUT("/api/v1/penerima/update/{id}")
+    suspend fun putRecipientById(
+        @Path("id") id: String?,
+        @Field("status") status: Int?
+    ): InsertResponse
 }

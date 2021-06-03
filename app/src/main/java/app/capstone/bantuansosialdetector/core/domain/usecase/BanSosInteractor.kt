@@ -13,9 +13,7 @@ class BanSosInteractor(private val banSosRepository: IBanSosRepository) :
 
     override fun getRecipientByNik(nik: String): Flow<Resource<List<Recipient>>> = banSosRepository.getRecipientByNik(nik)
 
-    override fun updateRecipient(recipient: Recipient, status: Boolean) {
-        TODO("Not yet implemented")
-    }
+    override fun updateRecipient(id: String?, status: Int?) = banSosRepository.updateRecipient(id, status)
 
     override fun postPredict(predict: Predict): Flow<Resource<ResultPredict>> = banSosRepository.postPredict(predict)
 }

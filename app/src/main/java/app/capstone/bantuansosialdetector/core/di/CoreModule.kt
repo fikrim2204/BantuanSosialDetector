@@ -3,6 +3,7 @@ package app.capstone.bantuansosialdetector.core.di
 import app.capstone.bantuansosialdetector.core.data.source.BanSosRepository
 import app.capstone.bantuansosialdetector.core.data.source.remote.RemoteDataSource
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService
+import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiService2
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
 import app.capstone.bantuansosialdetector.core.domain.repository.IBanSosRepository
 import app.capstone.bantuansosialdetector.core.domain.usecase.BanSosInteractor
@@ -16,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val repositoryModule = module {
-    single { RemoteDataSource(get()) }
+    single { RemoteDataSource(get(),get()) }
     single<IBanSosRepository> { BanSosRepository(get()) }
 }
 
@@ -36,6 +37,13 @@ val networkModule = module {
             GsonConverterFactory.create()
         ).client(get()).build()
         retrofit.create(ApiService::class.java)
+    }
+
+    single {
+        val retrofit = Retrofit.Builder().baseUrl("http://35.202.170.106:8501").addConverterFactory(
+            GsonConverterFactory.create()
+        ).client(get()).build()
+        retrofit.create(ApiService2::class.java)
     }
 }
 

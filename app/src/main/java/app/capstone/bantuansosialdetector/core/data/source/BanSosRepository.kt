@@ -1,9 +1,11 @@
 package app.capstone.bantuansosialdetector.core.data.source
 
-import android.util.Log
 import app.capstone.bantuansosialdetector.core.data.source.remote.RemoteDataSource
 import app.capstone.bantuansosialdetector.core.data.source.remote.network.ApiResponse
-import app.capstone.bantuansosialdetector.core.data.source.remote.response.*
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.InsertResponse
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.PredictResponse
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.RecipientResponse
+import app.capstone.bantuansosialdetector.core.data.source.remote.response.ResultPredictResponse
 import app.capstone.bantuansosialdetector.core.domain.model.Insert
 import app.capstone.bantuansosialdetector.core.domain.model.Predict
 import app.capstone.bantuansosialdetector.core.domain.model.Recipient
@@ -17,12 +19,10 @@ class BanSosRepository(private val remoteDataSource: RemoteDataSource) : IBanSos
     override fun insertRecipient(recipient: Recipient) =
         object : NetworkBoundResource<Insert, InsertResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<InsertResponse>> {
-                val recipientRemote = DataMapper.mapDomainToResponse(recipient)
                 return remoteDataSource.insertRecipient(recipient)
             }
 
             override suspend fun fetchFromNetwork(data: InsertResponse): Flow<Insert> {
-                Log.i("TAGG", "repo: ${data.data}")
                 return DataMapper.mapResponsesInsertToDomain(data)
             }
         }.asFlow()
@@ -39,9 +39,16 @@ class BanSosRepository(private val remoteDataSource: RemoteDataSource) : IBanSos
             }
         }.asFlow()
 
-    override fun updateRecipient(recipientRemote: RecipientRemote, status: Boolean) {
-        TODO("Not yet implemented")
-    }
+    override fun updateRecipient(id: String?, status: Int?) =
+        object : NetworkBoundResource<Insert, InsertResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<InsertResponse>> {
+                return remoteDataSource.putRecipientById(id, status)
+            }
+
+            override suspend fun fetchFromNetwork(data: InsertResponse): Flow<Insert> {
+                return DataMapper.mapResponsesInsertToDomain(data)
+            }
+        }.asFlow()
 
     override fun postPredict(predict: Predict): Flow<Resource<ResultPredict>> =
         object : NetworkBoundResource<ResultPredict, ResultPredictResponse>() {
