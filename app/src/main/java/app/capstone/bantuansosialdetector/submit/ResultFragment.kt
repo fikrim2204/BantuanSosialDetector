@@ -48,7 +48,7 @@ class ResultFragment : Fragment() {
                         with(binding) {
                             progressBar.visibility = View.GONE
                             fabAddSubmit.visibility = View.GONE
-//                            tvResult.text = recipient.data?.get(0)?.noNik.toString()
+                            tvResult.text = recipient.data?.get(0)?.noNik.toString()
                         }
                     }
                     is Resource.Error -> {

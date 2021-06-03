@@ -73,9 +73,8 @@ class SubmitFragment : Fragment() {
                             is Resource.Success -> {
                                 val action =
                                     SubmitFragmentDirections.actionSubmitFragmentToResultFragment(
-//                                        recipientResult.data?.get(0)?.noNik.toString()
+                                        recipientResult.data?.nik.toString()
                                     )
-//                                Log.d("SubmitFragment", "${recipientResult.data?.get(0)?.noNik}")
                                 findNavController().navigate(action)
                                 Toast.makeText(requireActivity(), "Form sent", Toast.LENGTH_SHORT)
                                     .show()
