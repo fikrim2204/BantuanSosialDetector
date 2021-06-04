@@ -12,7 +12,7 @@ data class RecipientRemote(
     val nama: String? = null,
     val no_hp: Long? = null,
     val alamat: String? = null,
-    val gaji: Double? = null,
+    val gaji: Int? = null,
     val pekerjaan: Int? = null,
     val tanggungan: Int? = null,
     val umur: Int? = null,

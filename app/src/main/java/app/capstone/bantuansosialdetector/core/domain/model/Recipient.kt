@@ -6,7 +6,7 @@ data class Recipient(
     var nama: String? = null,
     var noHp: Long? = null,
     var alamat: String? = null,
-    var gaji: Double? = null,
+    var gaji: Int? = null,
     var pekerjaan: Int? = null,
     var tanggungan: Int? = null,
     var umur: Int? = null,

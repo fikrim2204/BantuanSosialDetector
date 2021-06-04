@@ -107,7 +107,7 @@ class ResultFragment : Fragment() {
                         recipient.status = responseRecipient.data[0].status
 
                         val listGaji = mutableListOf<Double?>()
-                        listGaji.add(recipient.gaji)
+                        listGaji.add(recipient.gaji?.toDouble()?.div(1000000))
                         val listPekerjaan = mutableListOf<Int?>()
                         listPekerjaan.add(recipient.pekerjaan)
                         val listTanggungan = mutableListOf<Int?>()

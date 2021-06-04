@@ -29,7 +29,7 @@ interface ApiService {
         @Field("nama") name: String?,
         @Field("no_hp") no_hp: Long?,
         @Field("alamat") address: String?,
-        @Field("gaji") salary: Double?,
+        @Field("gaji") salary: Int?,
         @Field("pekerjaan") job: Int?,
         @Field("tanggungan") dependents: Int?,
         @Field("umur") age: Int?,

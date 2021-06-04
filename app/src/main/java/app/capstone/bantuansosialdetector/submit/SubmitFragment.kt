@@ -63,10 +63,11 @@ class SubmitFragment : Fragment() {
                 val name = etName.text.toString()
                 val noHp = etNoTel.text.toString().toLong()
                 val age = Integer.parseInt(etAge.text.toString())
-                val income = etIncome.text.toString().toDouble()/1000000
-                Log.d("Income", income.toString())
+                val income = etIncome.text.toString().toInt()
                 val dependents = Integer.parseInt(etDependents.text.toString())
                 val address = etAddress.text.toString()
+//                if (notEmpty(noNik, name, noHp, age, income, dependents, address)) {
+//                }
                 val recipient =
                     Recipient(null, noNik, name, noHp, address, income, job, dependents, age, 0)
                 viewModel.insertRecipient(recipient)
@@ -97,6 +98,18 @@ class SubmitFragment : Fragment() {
                     }
             }
         }
+    }
+
+    private fun notEmpty(
+        noNik: Long,
+        name: String,
+        noHp: Long,
+        age: Int,
+        income: Int,
+        dependents: Int,
+        address: String
+    ): Boolean {
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
