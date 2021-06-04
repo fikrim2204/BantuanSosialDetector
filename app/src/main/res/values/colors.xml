@@ -8,4 +8,6 @@
     <color name="dark_red_secondary">#75000c</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
+    <color name="accepted">#64DD17</color>
+    <color name="declined">#D50000</color>
 </resources>

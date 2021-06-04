@@ -21,6 +21,7 @@ class TrackingAdapter : RecyclerView.Adapter<TrackingAdapter.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(tracking: Tracking) = with(binding) {
             tracking.let { data ->
+                tvNoTracking.text = data.id.toString()
                 tvAddress.text = data.alamat
                 tvStatus.text = data.status
             }

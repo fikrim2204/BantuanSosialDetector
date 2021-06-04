@@ -1,5 +1,6 @@
 package app.capstone.bantuansosialdetector.submit
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,7 +51,7 @@ class ResultFragment : Fragment() {
         val userNik = prefs.nikUserPref
         if (userNik != null) {
             viewModel.inputNikGetRecipient(userNik)
-            getRecipient()
+            nikInserted()
         } else {
             emptyData()
         }
@@ -67,12 +68,9 @@ class ResultFragment : Fragment() {
         with(binding) {
             lyEmpty.root.visibility = View.VISIBLE
             lyEmpty.btnAlreadySubmit.setOnClickListener {
-                activity?.supportFragmentManager?.let { supportFragment ->
-                    DialogAlreadySubmitFragment().show(
-                        supportFragment,
-                        DialogAlreadySubmitFragment.TAG
-                    )
-                }
+                val mDialogAlreadySubmitFragment = DialogAlreadySubmitFragment()
+                val mFragmentManager = childFragmentManager
+                mDialogAlreadySubmitFragment.show(mFragmentManager, DialogAlreadySubmitFragment::class.java.simpleName)
             }
             fabAddSubmit.visibility = View.VISIBLE
             fabAddSubmit.setOnClickListener {
@@ -81,17 +79,26 @@ class ResultFragment : Fragment() {
         }
     }
 
-    private fun getRecipient() {
-        viewModel.getRecipientByNik().observe(viewLifecycleOwner, { responseRecipient ->
+    private fun nikInserted() {
+        viewModel.nikGetRecipient.observe(viewLifecycleOwner, { nik ->
+            getRecipient(nik)
+        })
+    }
+
+    private fun getRecipient(nik: String?) {
+        viewModel.getRecipientByNik(nik).observe(viewLifecycleOwner, { responseRecipient ->
             when (responseRecipient) {
                 is Resource.Loading -> {
-                    with(binding) {
-                        progressBar.visibility = View.VISIBLE
-                        fabAddSubmit.visibility = View.GONE
-                    }
+                        binding.progressBar.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
-                    if(responseRecipient.data?.isNotEmpty() == true) {
+                    if (responseRecipient.data?.isNotEmpty() == true) {
+                        with(binding) {
+                            lyEmpty.root.visibility = View.GONE
+                            fabAddSubmit.visibility = View.GONE
+                        }
+
+                        prefs.nikUserPref = responseRecipient.data[0].noNik.toString()
                         recipient.id = responseRecipient.data[0].id
                         recipient.gaji = responseRecipient.data[0].gaji
                         recipient.tanggungan = responseRecipient.data[0].tanggungan
@@ -115,7 +122,11 @@ class ResultFragment : Fragment() {
                     } else {
                         binding.progressBar.visibility = View.GONE
                         prefs.nikUserPref = null
-                        Toast.makeText(requireActivity(), "Nik not registered or ", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireActivity(),
+                            "Nik not registered ",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         emptyData()
                     }
                 }
@@ -140,6 +151,9 @@ class ResultFragment : Fragment() {
                             if (result >= 0.5) {
                                 viewModel.updateRecipient(recipient.id, 1)
                                 updateRecipient()
+                            } else {
+                                viewModel.updateRecipient(recipient.id, 0)
+                                updateRecipient()
                             }
                         }
                     }
@@ -161,8 +175,8 @@ class ResultFragment : Fragment() {
                 is Resource.Success -> {
                     if (resultUpdate.data?.status == 1) {
                         with(binding) {
-                            progressBar.visibility = View.GONE
                             tvResult.text = getString(R.string.congratulation)
+                            tvResult.setTextColor(Color.parseColor("#4CAF50"))
                             tvResultDetail.text = getString(R.string.accepted_message)
                             tvStatusDelivery.text = getString(R.string.status_delivery)
 
@@ -172,8 +186,10 @@ class ResultFragment : Fragment() {
                     } else {
                         with(binding) {
                             tvResult.text = getString(R.string.sorry)
+                            tvResult.setTextColor(Color.parseColor("#F44336"))
                             tvResultDetail.text = getString(R.string.declined_message)
                             tvStatusDelivery.visibility = View.GONE
+                            binding.progressBar.visibility = View.GONE
                         }
                     }
                 }
@@ -220,6 +236,18 @@ class ResultFragment : Fragment() {
                 }
             })
     }
+
+    internal var onDialogClickListener: DialogAlreadySubmitFragment.OnDialogClickListener =
+        object : DialogAlreadySubmitFragment.OnDialogClickListener {
+            override fun onButtonOkClicked(text: String?) {
+                if (text != null) {
+                    viewModel.inputNikGetRecipient(text)
+                    nikInserted()
+                } else {
+                    emptyData()
+                }
+            }
+        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

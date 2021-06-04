@@ -1,20 +1,18 @@
 package app.capstone.bantuansosialdetector.submit
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import app.capstone.bantuansosialdetector.core.utils.Prefs
 import app.capstone.bantuansosialdetector.databinding.FragmentDialogAlreadySubmitBinding
-import org.koin.android.ext.android.inject
 
 class DialogAlreadySubmitFragment : DialogFragment() {
     private var _binding: FragmentDialogAlreadySubmitBinding? = null
     private val binding get() = _binding!!
-
-    private val prefs: Prefs by inject()
+    private var dialogClickListener: OnDialogClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,11 +32,21 @@ class DialogAlreadySubmitFragment : DialogFragment() {
     private fun setupClickListener() {
         binding.btnOk.setOnClickListener {
             val noNik = binding.etNoNik.text.toString()
-            prefs.nikUserPref = noNik
+            dialogClickListener?.onButtonOkClicked(noNik)
+//            prefs.nikUserPref = noNik
             dismiss()
         }
         binding.btnCancel.setOnClickListener {
             dismiss()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val fragment = parentFragment
+
+        if (fragment is ResultFragment) {
+            this.dialogClickListener = fragment.onDialogClickListener
         }
     }
 
@@ -48,6 +56,15 @@ class DialogAlreadySubmitFragment : DialogFragment() {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    interface OnDialogClickListener {
+        fun onButtonOkClicked(text: String?)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        this.dialogClickListener = null
     }
 
     override fun onStop() {
