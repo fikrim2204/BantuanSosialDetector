@@ -117,8 +117,8 @@ class ResultFragment : Fragment() {
 
                         val predict = Predict(listGaji, listPekerjaan, listTanggungan, listUmur)
 
-                        viewModel.inputPostPredict(predict)
-                        inputPostPredict()
+//                        viewModel.inputPostPredict(predict)
+                        inputPostPredict(predict)
                     } else {
                         binding.progressBar.visibility = View.GONE
                         prefs.nikUserPref = null
@@ -140,8 +140,8 @@ class ResultFragment : Fragment() {
         })
     }
 
-    private fun inputPostPredict() {
-        viewModel.postPredict()
+    private fun inputPostPredict(predict: Predict) {
+        viewModel.postPredict(predict)
             .observe(viewLifecycleOwner, { resultPredict ->
                 when (resultPredict) {
                     is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
@@ -149,11 +149,11 @@ class ResultFragment : Fragment() {
                         val result = resultPredict.data?.predictions?.get(0)?.get(0)
                         if (result != null) {
                             if (result >= 0.5) {
-                                viewModel.updateRecipient(recipient.id, 1)
-                                updateRecipient()
+//                                viewModel.updateRecipient(recipient.id, 1)
+                                updateRecipient(recipient.id, 1)
                             } else {
-                                viewModel.updateRecipient(recipient.id, 0)
-                                updateRecipient()
+//                                viewModel.updateRecipient(recipient.id, 0)
+                                updateRecipient(recipient.id, 0)
                             }
                         }
                     }
@@ -167,8 +167,8 @@ class ResultFragment : Fragment() {
             })
     }
 
-    private fun updateRecipient() {
-        viewModel.updateRecipientById().observe(viewLifecycleOwner, { resultUpdate ->
+    private fun updateRecipient(id: String?, i: Int) {
+        viewModel.updateRecipientById(id, i).observe(viewLifecycleOwner, { resultUpdate ->
             when (resultUpdate) {
                 is Resource.Loading -> binding.progressBar.visibility =
                     View.VISIBLE
@@ -180,8 +180,8 @@ class ResultFragment : Fragment() {
                             tvResultDetail.text = getString(R.string.accepted_message)
                             tvStatusDelivery.text = getString(R.string.status_delivery)
 
-                            viewModel.inputGetTracking(resultUpdate.data.nik)
-                            getTracking()
+//                            viewModel.inputGetTracking(resultUpdate.data.nik)
+                            getTracking(resultUpdate.data.nik)
                         }
                     } else {
                         with(binding) {
@@ -202,8 +202,8 @@ class ResultFragment : Fragment() {
         })
     }
 
-    private fun getTracking() {
-        viewModel.getTracking().observe(
+    private fun getTracking(nik: String?) {
+        viewModel.getTracking(nik).observe(
             viewLifecycleOwner,
             { resultTracking ->
                 when (resultTracking) {
