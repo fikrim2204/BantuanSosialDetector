@@ -46,7 +46,6 @@ class SignUpFragment : Fragment() {
                                     "Successfully Registered",
                                     Toast.LENGTH_LONG
                                 ).show()
-                                val user = auth.currentUser?.displayName.toString()
                                 updateUi()
                             } else {
                                 Toast.makeText(
