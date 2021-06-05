@@ -1,6 +1,7 @@
 package app.capstone.bantuansosialdetector.submit
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -59,51 +60,88 @@ class SubmitFragment : Fragment() {
                 Log.d("Position job", i.toString())
             }
             btnSubmit.setOnClickListener {
-                val noNik = etNoNik.text.toString().toLong()
+                val noNik = etNoNik.text.toString().toLongOrNull()
                 val name = etName.text.toString()
-                val noHp = etNoTel.text.toString().toLong()
-                val age = Integer.parseInt(etAge.text.toString())
-                val income = etIncome.text.toString().toInt()
-                val dependents = Integer.parseInt(etDependents.text.toString())
+                val noHp = etNoTel.text.toString().toLongOrNull()
+                val age = etAge.text.toString().toIntOrNull()
+                val income = etIncome.text.toString().toIntOrNull()
+                val dependents = etDependents.text.toString().toIntOrNull()
                 val address = etAddress.text.toString()
-//                if (notEmpty(noNik, name, noHp, age, income, dependents, address)) {
-//                }
-                val recipient =
-                    Recipient(null, noNik, name, noHp, address, income, job, dependents, age, 0)
-                viewModel.insertRecipient(recipient)
-                    .observe(viewLifecycleOwner) { recipientResult ->
-                        when (recipientResult) {
-                            is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                            is Resource.Success -> {
-                                prefs.nikUserPref = recipientResult.data?.nik
-                                findNavController().navigateUp()
-                                Toast.makeText(requireActivity(), "Form sent", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                            is Resource.Error -> {
-                                Log.d("TAG", recipientResult.message.toString())
-                                findNavController().navigateUp()
-                                Toast.makeText(
-                                    requireActivity(),
-                                    recipientResult.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                if (notEmpty(noNik, name, noHp, age, income, dependents, address, job)) {
+                    val recipient =
+                        Recipient(null, noNik, name, noHp, address, income, job, dependents, age, 0)
+                    viewModel.insertRecipient(recipient)
+                        .observe(viewLifecycleOwner) { recipientResult ->
+                            when (recipientResult) {
+                                is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                                is Resource.Success -> {
+                                    prefs.nikUserPref = recipientResult.data?.nik
+                                    findNavController().navigateUp()
+                                    Toast.makeText(
+                                        requireActivity(),
+                                        "Form sent",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+                                is Resource.Error -> {
+                                    Log.d("TAG", recipientResult.message.toString())
+                                    findNavController().navigateUp()
+                                    Toast.makeText(
+                                        requireActivity(),
+                                        recipientResult.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
-                    }
+                }
             }
         }
     }
 
     private fun notEmpty(
-        noNik: Long,
+        noNik: Long?,
         name: String,
-        noHp: Long,
-        age: Int,
-        income: Int,
-        dependents: Int,
-        address: String
+        noHp: Long?,
+        age: Int?,
+        income: Int?,
+        dependents: Int?,
+        address: String,
+        job: Int?
     ): Boolean {
+        if (TextUtils.isEmpty(noNik.toString())) {
+            binding.etNoNik.error = "Field must not be empty"
+            return false
+        }
+        if (TextUtils.isEmpty(name)) {
+            binding.etName.error = "Field must not be empty"
+            return false
+        }
+        if (TextUtils.isEmpty(noHp.toString())) {
+            binding.etNoTel.error = "Field must not be empty"
+            return false
+        }
+        if (TextUtils.isEmpty(age.toString())) {
+            binding.etAge.error = "Field must not be empty"
+            return false
+        }
+        if (TextUtils.isEmpty(income.toString())) {
+            binding.etIncome.error = "Field must not be empty"
+            return false
+        }
+        if (TextUtils.isEmpty(dependents.toString())) {
+            binding.etDependents.error = "Field must not be empty"
+            return false
+        }
+        if (TextUtils.isEmpty(address)) {
+            binding.etAddress.error = "Field must not be empty"
+            return false
+        }
+        if (job == null) {
+            binding.atvJob.error = "Select Job"
+            return false
+        }
 
         return true
     }
