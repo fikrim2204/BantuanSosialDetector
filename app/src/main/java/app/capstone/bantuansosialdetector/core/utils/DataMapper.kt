@@ -6,31 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 object DataMapper {
-//    fun mapResponsesToDomain(input: RecipientRemote) =
-//        Recipient(
-//            id = input.id,
-//            nama = input.nama,
-//            alamat = input.alamat,
-//            gaji = input.gaji,
-//            pekerjaan = input.pekerjaan,
-//            tanggungan = input.tanggungan,
-//            umur = input.umur,
-//            status = input.status
-//        )
-
-    fun mapDomainToResponse(input: Recipient) =
-        RecipientRemote(
-            id = input.id,
-            nik = input.noNik,
-            nama = input.nama,
-            no_hp = input.noHp,
-            alamat = input.alamat,
-            gaji = input.gaji,
-            pekerjaan = input.pekerjaan,
-            tanggungan = input.tanggungan,
-            umur = input.umur,
-            status = input.status
-        )
 
     fun mapResponsesToDomainWithFlow(input: List<RecipientRemote>?): Flow<List<Recipient>> {
         val list = ArrayList<Recipient>()
