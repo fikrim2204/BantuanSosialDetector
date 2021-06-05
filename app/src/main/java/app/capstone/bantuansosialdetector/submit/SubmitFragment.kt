@@ -75,11 +75,6 @@ class SubmitFragment : Fragment() {
                         when (recipientResult) {
                             is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                             is Resource.Success -> {
-//                                val action =
-//                                    SubmitFragmentDirections.actionSubmitFragmentToResultFragment(
-//                                        recipientResult.data?.nik.toString()
-//                                    )
-//                                findNavController().navigate(action)
                                 prefs.nikUserPref = recipientResult.data?.nik
                                 findNavController().navigateUp()
                                 Toast.makeText(requireActivity(), "Form sent", Toast.LENGTH_SHORT)
@@ -109,6 +104,7 @@ class SubmitFragment : Fragment() {
         dependents: Int,
         address: String
     ): Boolean {
+
         return true
     }
 
