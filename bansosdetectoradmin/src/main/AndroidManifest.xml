@@ -3,6 +3,7 @@
     package="app.capstone.bansosadmin">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -10,8 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.BantuanSosialDetector">
+        android:theme="@style/Theme.BantuanSosialDetector"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.activities.auth.MainActivity"
             android:theme="@style/Theme.BantuanSosialDetectorNoActionBar" />

@@ -1,26 +1,28 @@
 package app.capstone.bansosadmin.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.capstone.bansosadmin.databinding.ItemLayoutBinding
-import app.capstone.bansosadmin.domain.model.Penerima
+import app.capstone.bansosadmin.domain.model.Recipients
 
-class PenerimaAdapter(private val listener: UserInteractionListener) : RecyclerView.Adapter<PenerimaAdapter.ViewHolder>() {
-    private var listPenerima = ArrayList<Penerima>()
+class RecipientAdapter(private val listener: UserInteractionListener) :
+    RecyclerView.Adapter<RecipientAdapter.ViewHolder>() {
+    private var recipientList = ArrayList<Recipients>()
 
-    fun setList(list: List<Penerima>?) {
+    fun setList(list: List<Recipients>?) {
         if (list == null) return
-        listPenerima.clear()
-        listPenerima.addAll(list)
+        recipientList.clear()
+        recipientList.addAll(list)
         notifyDataSetChanged()
     }
 
 
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(penerima: Penerima?) = with(binding) {
-            penerima?.let { data ->
+        fun bind(recipients: Recipients?) = with(binding) {
+            recipients?.let { data ->
                 tvNik.text = data.nik.toString()
                 tvNama.text = data.nama.toString()
                 tvAlamat.text = data.alamat
@@ -38,16 +40,16 @@ class PenerimaAdapter(private val listener: UserInteractionListener) : RecyclerV
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(listPenerima[position]) {
+        with(recipientList[position]) {
             holder.bind(this)
             holder.itemView.setOnClickListener {
-                listener.onUserItemClickListener(this)
+                listener.onUserItemClickListener(it,this)
             }
         }
     }
 
-    override fun getItemCount() = listPenerima.size
+    override fun getItemCount() = recipientList.size
     interface UserInteractionListener {
-        fun onUserItemClickListener(penerima: Penerima?)
+        fun onUserItemClickListener(view: View, recipients: Recipients?)
     }
 }

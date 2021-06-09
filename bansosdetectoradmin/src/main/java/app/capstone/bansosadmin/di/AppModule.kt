@@ -7,7 +7,10 @@ import app.capstone.bansosadmin.data.source.remote.network.ApiInterface
 import app.capstone.bansosadmin.domain.repository.IMyRepository
 import app.capstone.bansosadmin.domain.usecase.MyInteractor
 import app.capstone.bansosadmin.domain.usecase.MyUseCase
+import app.capstone.bansosadmin.ui.fragments.detail.DetailTrackViewModel
 import app.capstone.bansosadmin.ui.fragments.home.HomeViewModel
+import app.capstone.bansosadmin.ui.fragments.insert.InsertViewModel
+import app.capstone.bansosadmin.ui.fragments.update.UpdateTrackViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -61,4 +64,7 @@ val useCaseModule = module {
 
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
+    viewModel { InsertViewModel(get()) }
+    viewModel { DetailTrackViewModel(get()) }
+    viewModel { UpdateTrackViewModel(get()) }
 }
