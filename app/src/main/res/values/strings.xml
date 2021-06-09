@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">Bantuan Sosial Detector</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="password_confirmation">Password Confirmation</string>
-    <string name="blank"> </string>
     <string name="forgot_password">Forgot password?</string>
     <string name="image_logo">Image logo</string>
     <string name="submit">Submit</string>
     <string name="input_your_email">Input your email</string>
-    <string name="home">Home</string>
-    <string name="delivery">Delivery</string>
     <string name="name">Full Name</string>
     <string name="no_telephone">No Telephone</string>
     <string name="age">Age</string>
     <string name="income">Income</string>
     <string name="job">Job</string>
     <string name="number_of_dependents">Number of dependents</string>
-    <string name="id_bansos">Id Bansos</string>
-    <string name="result_tracking_your_package">Result tracking your package:</string>
     <string name="change_password">Change Password</string>
     <string name="sign_out">Sign Out</string>
     <string name="set_up_password">Set up password</string>
@@ -45,7 +39,7 @@
     <string name="cancel">Cancel</string>
     <string name="delivery_waiting">Delivery data will appear here soon.</string>
     <string name="destination">Destination:</string>
-    <string name="status">Status:</string>
     <string name="latest_location">Latest location:</string>
     <string name="no_tracking">No tracking:</string>
+    <string name="image_profile">Image Profile</string>
 </resources>

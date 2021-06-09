@@ -149,10 +149,8 @@ class ResultFragment : Fragment() {
                         val result = resultPredict.data?.predictions?.get(0)?.get(0)
                         if (result != null) {
                             if (result >= 0.5) {
-//                                viewModel.updateRecipient(recipient.id, 1)
                                 updateRecipient(recipient.id, 1)
                             } else {
-//                                viewModel.updateRecipient(recipient.id, 0)
                                 updateRecipient(recipient.id, 0)
                             }
                         }
@@ -180,7 +178,6 @@ class ResultFragment : Fragment() {
                             tvResultDetail.text = getString(R.string.accepted_message)
                             tvStatusDelivery.text = getString(R.string.status_delivery)
 
-//                            viewModel.inputGetTracking(resultUpdate.data.nik)
                             getTracking(resultUpdate.data.nik)
                         }
                     } else {
