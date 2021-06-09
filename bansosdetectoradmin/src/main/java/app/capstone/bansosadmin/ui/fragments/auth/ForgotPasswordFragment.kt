@@ -8,9 +8,10 @@ import android.widget.Toast
 import app.capstone.bansosadmin.databinding.FragmentForgotPasswordBinding
 import app.capstone.bansosadmin.ui.fragments.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
 
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
-    private lateinit var auth: FirebaseAuth
+    private val auth: FirebaseAuth by inject()
     override fun getBindings(
         inflater: LayoutInflater,
         container: ViewGroup?

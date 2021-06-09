@@ -9,11 +9,33 @@
     <string name="password_confirmation">Password Confirmation</string>
     <string name="submit">Submit</string>
     <string name="input_your_email">Input your email</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
-    <string name="masukkan_id_penerima">Masukkan ID Penerima</string>
-    <string name="cari">Cari</string>
+    <string name="input_nik">Input NIK</string>
+    <string name="search">Search</string>
     <string name="manage">Management Tracking</string>
+    <string name="update_location">Update location</string>
+    <string name="update">Update Track</string>
+    <string name="finish">Finish Track</string>
+    <string name="insert_data">Insert data</string>
+    <string name="address">Address</string>
+    <string name="status">Status</string>
+    <string name="nik">NIK</string>
+    <string name="recipient_details">Recipient Details</string>
+    <string name="recipient_track">Recipient Track</string>
+    <string name="no_tracks_for_this_recipient">No Tracks for this Recipient</string>
+    <string-array name="status_track">
+        <item>On Process</item>
+        <item>Finish</item>
+    </string-array>
+    <string name="confirm_delete">Confirm delete</string>
+    <string name="confirm_message">Are you sure you want to delete?</string>
+    <string name="confirm_finish">Confirm finish</string>
+    <string name="confirm_message_finish">Are you sure you want to finish this track??</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="click_to_update">Click to update</string>
+    <string name="detail_tracks">Detail Tracks</string>
+    <string name="no_track_details_for_this_track">No Track details for this track</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

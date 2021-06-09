@@ -1,6 +1,5 @@
 package app.capstone.bansosadmin.ui.activities
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
@@ -17,9 +16,4 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     abstract fun getBindings(): VB
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 }

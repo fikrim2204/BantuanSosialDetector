@@ -7,5 +7,5 @@ import app.capstone.bansosadmin.domain.usecase.MyUseCase
 class HomeViewModel(private val myUseCase: MyUseCase) :
     ViewModel() {
 
-    fun getPenerimaById(id: String) = myUseCase.getAllMovies(id).asLiveData()
+    fun getPenerimaById(id: String) = myUseCase.getRecipientById(id).asLiveData()
 }

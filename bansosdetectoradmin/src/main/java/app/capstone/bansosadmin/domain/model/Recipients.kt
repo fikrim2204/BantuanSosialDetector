@@ -1,6 +1,10 @@
 package app.capstone.bansosadmin.domain.model
 
-data class Penerima (
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Recipients(
     val alamat: String?,
     val created_at: String?,
     val gaji: Int?,
@@ -12,4 +16,5 @@ data class Penerima (
     val status: Int?,
     val tanggungan: Int?,
     val umur: Int?,
-    val updated_at: String?)
+    val updated_at: String?
+) : Parcelable

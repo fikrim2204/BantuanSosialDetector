@@ -7,6 +7,10 @@ import app.capstone.bansosadmin.ui.activities.BaseActivity
 import app.capstone.bansosadmin.ui.activities.auth.MainActivity
 import app.capstone.bansosadmin.ui.activities.home.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
@@ -14,7 +18,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initCheck()
+        CoroutineScope(IO).launch {
+            delay(1000)
+            initCheck()
+        }
     }
 
     private fun initCheck() {
