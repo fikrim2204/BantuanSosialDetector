@@ -7,11 +7,7 @@
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
         "mobilesdk_app_id": "1:16525290177:android:2fc911b125db6bc5350240",
-=======
-        "mobilesdk_app_id": "1:16525290177:android:5d09b0715b5298ac350240",
->>>>>>> origin/develop
         "android_client_info": {
           "package_name": "app.capstone.bantuansosialdetector"
         }

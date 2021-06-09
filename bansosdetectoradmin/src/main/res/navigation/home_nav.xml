@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="app.capstone.bansosadmin.ui.fragments.home.HomeFragment"
+        android:label="@string/manage"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="app.capstone.bansosadmin.ui.fragments.profile.ProfileFragment"
+        android:label="Your Profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="app.capstone.bansosadmin.ui.fragments.detail.DetailFragment"
+        android:label="Recipient Details"
+        tools:layout="@layout/fragment_detail">
+
+        <argument
+            android:name="detail"
+            app:argType="app.capstone.bansosadmin.domain.model.Recipients"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_detailFragment_to_insertTrackFragment"
+            app:destination="@id/insertTrackFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_updateTrackFragment"
+            app:destination="@id/updateTrackFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/insertTrackFragment"
+        android:name="app.capstone.bansosadmin.ui.fragments.insert.InsertTrackFragment"
+        android:label="InsertTrackFragment"
+        tools:layout="@layout/fragment_insert_track">
+        <argument
+            android:name="detail"
+            app:argType="app.capstone.bansosadmin.domain.model.Recipients"
+            app:nullable="true" />
+    </dialog>
+    <fragment
+        android:id="@+id/updateTrackFragment"
+        android:name="app.capstone.bansosadmin.ui.fragments.update.UpdateTrackFragment"
+        android:label="Tracking Update"
+        tools:layout="@layout/fragment_update_track">
+
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="nik"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>
